@@ -1,0 +1,61 @@
+def connectionString
+def versionText
+def versionValue
+def configText
+def configVer
+
+pipeline {
+    agent none
+	
+    environment {
+		src_db_cred = credentials('${env.src_db_cred}')
+		dst_db_cred = credentials('${env.dst_db_cred}')
+    }
+
+    stages {
+        stage('Резервное копирование базы') {
+			agent { label '${env.src_agent_label}'}
+            steps {
+				timestamps {
+					cmd("cpdb backup ${env.src_server_name} ${env.src_db_name} -user ${src_db_cred_Usr} -pwd ${src_db_cred_Pwd} -path \"${env.src_bak_path}\"")
+				}
+            }
+        }
+
+        stage('Отправка копии в хранилище') {
+			agent { label '${env.src_agent_label}'}
+            steps {
+                timestamps {
+					cmd("cpdb putyadisk \"${env.src_bak_path}\" -ya-path \"${env.storage_path}\" -delfile");
+                }
+            }
+        }
+        stage('Получение копии из хранилища') {
+			agent { label '${env.dst_agent_label}'}
+            steps {
+                timestamps {
+					cmd("cpdb getyadisk \"${env.dst_bak_path}\" -ya-path \"${env.storage_path}\" -delfile");
+                }
+            }
+        }
+
+        stage('Восстановление базы из резервной копии') {
+			agent { label '${env.dst_agent_label}'}
+            steps {
+                timestamps {
+					cmd("cpdb restore ${env.dst_server_name} ${env.dst_db_name} -user ${dst_db_cred_Usr} -pwd ${dst_db_cred_Pwd} -path \"${env.dst_bak_path}\" -create-db -shrink-db -db-owner ${env.dest_dbo} -db-bakname ${env.src_db_name} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -delfile");
+                 }
+            }
+
+        }
+        
+    }
+}
+
+def cmd(command) {
+    if (isUnix()) {
+        sh "${command}"
+    } else {
+        bat "chcp 65001\n${command}"
+    }
+}
