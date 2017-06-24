@@ -8,8 +8,8 @@ pipeline {
     agent none
 	
     environment {
-		src_db_cred = credentials('${env.src_db_cred}')
-		dst_db_cred = credentials('${env.dst_db_cred}')
+		src_db_cred = credentials("${env.src_db_cred}")
+		dst_db_cred = credentials("${env.dst_db_cred}")
     }
 
     stages {
