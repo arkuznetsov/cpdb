@@ -26,7 +26,7 @@ pipeline {
 			agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb putyadisk \"${env.src_bak_path}\" -ya-path \"${env.storage_path}\" -delsource");
+					cmd("cpdb putyadisk \"${env.src_bak_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -delsource");
                 }
             }
         }
@@ -34,7 +34,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb getyadisk \"${env.dst_bak_path}\" -ya-path \"${env.storage_path}\" -delsource");
+					cmd("cpdb getyadisk \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -delsource");
                 }
             }
         }
@@ -56,6 +56,6 @@ def cmd(command) {
     if (isUnix()) {
         sh "${command}"
     } else {
-        bat "chcp 65001\nchcp 1251\n${command}"
+        bat "chcp 1251\n${command}"
     }
 }
