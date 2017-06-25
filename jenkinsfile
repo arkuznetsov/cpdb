@@ -17,7 +17,7 @@ pipeline {
 			agent { label "${env.src_agent_label}"}
             steps {
 				timestamps {
-					cmd("cpdb backup ${env.src_server_name} ${env.src_db_name} -user ${src_db_cred_Usr} -pwd ${src_db_cred_Pwd} -path \"${env.src_bak_path}\"")
+					cmd("cpdb backup ${env.src_server_name} ${env.src_db_name} -user ${src_db_cred_Usr} -pwd ${src_db_cred_Psw} -path \"${env.src_bak_path}\"")
 				}
             }
         }
@@ -43,7 +43,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb restore ${env.dst_server_name} ${env.dst_db_name} -user ${dst_db_cred_Usr} -pwd ${dst_db_cred_Pwd} -path \"${env.dst_bak_path}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-bakname ${env.src_db_name} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -delsource");
+					cmd("cpdb restore ${env.dst_server_name} ${env.dst_db_name} -user ${dst_db_cred_Usr} -pwd ${dst_db_cred_Psw} -path \"${env.dst_bak_path}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-bakname ${env.src_db_name} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -delsource");
                  }
             }
 
@@ -56,6 +56,6 @@ def cmd(command) {
     if (isUnix()) {
         sh "${command}"
     } else {
-        bat "chcp 65001\n${command}"
+        bat "chcp 65001\nchcp 1251\n${command}"
     }
 }
