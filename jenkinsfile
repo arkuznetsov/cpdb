@@ -13,7 +13,7 @@ pipeline {
     }
 
     stages {
-        stage('Р РµР·РµСЂРІРЅРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРµ Р±Р°Р·С‹') {
+        stage('Резервное копирование базы') {
 			agent { label "${env.src_agent_label}"}
             steps {
 				timestamps {
@@ -22,7 +22,7 @@ pipeline {
             }
         }
 
-        stage('РћС‚РїСЂР°РІРєР° РєРѕРїРёРё РІ С…СЂР°РЅРёР»РёС‰Рµ') {
+        stage('Отправка копии в хранилище') {
 			agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
@@ -30,7 +30,7 @@ pipeline {
                 }
             }
         }
-        stage('РџРѕР»СѓС‡РµРЅРёРµ РєРѕРїРёРё РёР· С…СЂР°РЅРёР»РёС‰Р°') {
+        stage('Получение копии из хранилища') {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
@@ -39,7 +39,7 @@ pipeline {
             }
         }
 
-        stage('Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ Р±Р°Р·С‹ РёР· СЂРµР·РµСЂРІРЅРѕР№ РєРѕРїРёРё') {
+        stage('Восстановление базы из резервной копии') {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
@@ -56,6 +56,6 @@ def cmd(command) {
     if (isUnix()) {
         sh "${command}"
     } else {
-        bat "chcp 1251\n${command}"
+        bat "chcp 65001\nchcp 1251\n${command}"
     }
 }
