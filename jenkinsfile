@@ -10,6 +10,8 @@ pipeline {
     environment {
 		src_db_cred = credentials("${env.src_db_cred}")
 		dst_db_cred = credentials("${env.dst_db_cred}")
+		dst_ib_cred = credentials("${env.dst_ib_cred}")
+		dst_ib_storage_cred = credentials("${env.dst_ib_storage_cred}")
     }
 
     stages {
@@ -47,6 +49,14 @@ pipeline {
                  }
             }
 
+        stage('Подключение базу к хранилищу конфигурации') {
+			agent { label "${dst_ib_agent_label}"}
+            steps {
+                timestamps {
+					cmd("cpdb uconstorage ${dst_ib_con_string} -db-user ${dst_ib_cred_Usr} -db-pwd ${dst_ib_cred_Psw}");
+					cmd("cpdb constorage ${dst_ib_con_string} ${dst_ib_storage_adr} -db-user ${dst_ib_cred_Usr} -db-pwd ${dst_ib_cred_Psw} -storage-user ${dst_ib_storage_cred_Usr} -storage-pwd ${dst_ib_storage_cred_Psw}");
+                 }
+            }
         }
         
     }
@@ -56,6 +66,6 @@ def cmd(command) {
     if (isUnix()) {
         sh "${command}"
     } else {
-        bat "chcp 65001\nchcp 1251\n${command}"
+        bat "chcp 1251\n${command}"
     }
 }
