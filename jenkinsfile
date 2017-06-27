@@ -54,8 +54,8 @@ pipeline {
 			agent { label "${dst_ib_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb uconstorage ${dst_ib_con_string} -db-user ${dst_ib_cred_Usr} -db-pwd ${dst_ib_cred_Psw}");
-					cmd("cpdb constorage ${dst_ib_con_string} ${dst_ib_storage_adr} -db-user ${dst_ib_cred_Usr} -db-pwd ${dst_ib_cred_Psw} -storage-user ${dst_ib_storage_cred_Usr} -storage-pwd ${dst_ib_storage_cred_Psw}");
+					cmd("cpdb uconstorage ${dst_ib_con_string} -db-user \"${dst_ib_cred_Usr}\" -db-pwd \"${dst_ib_cred_Psw}\"");
+					cmd("cpdb constorage ${dst_ib_con_string} ${dst_ib_storage_adr} -db-user \"${dst_ib_cred_Usr}\" -db-pwd \"${dst_ib_cred_Psw}\" -storage-user \"${dst_ib_storage_cred_Usr}\" -storage-pwd \"${dst_ib_storage_cred_Psw}\"");
                  }
             }
         }
