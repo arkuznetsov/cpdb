@@ -1,4 +1,4 @@
-﻿def connectionString
+def connectionString
 def versionText
 def versionValue
 def configText
