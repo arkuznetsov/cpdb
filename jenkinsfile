@@ -1,4 +1,4 @@
-def connectionString
+п»їdef connectionString
 def versionText
 def versionValue
 def configText
@@ -15,7 +15,7 @@ pipeline {
     }
 
     stages {
-        stage('Резервное копирование базы') {
+        stage('Р РµР·РµСЂРІРЅРѕРµ РєРѕРїРёСЂРѕРІР°РЅРёРµ Р±Р°Р·С‹') {
 			agent { label "${env.src_agent_label}"}
             steps {
 				timestamps {
@@ -24,7 +24,7 @@ pipeline {
             }
         }
 
-        stage('Отправка копии в хранилище') {
+        stage('РћС‚РїСЂР°РІРєР° РєРѕРїРёРё РІ С…СЂР°РЅРёР»РёС‰Рµ') {
 			agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
@@ -32,7 +32,7 @@ pipeline {
                 }
             }
         }
-        stage('Получение копии из хранилища') {
+        stage('РџРѕР»СѓС‡РµРЅРёРµ РєРѕРїРёРё РёР· С…СЂР°РЅРёР»РёС‰Р°') {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
@@ -41,7 +41,7 @@ pipeline {
             }
         }
 
-        stage('Восстановление базы из резервной копии') {
+        stage('Р’РѕСЃСЃС‚Р°РЅРѕРІР»РµРЅРёРµ Р±Р°Р·С‹ РёР· СЂРµР·РµСЂРІРЅРѕР№ РєРѕРїРёРё') {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
@@ -50,7 +50,7 @@ pipeline {
             }
         }
 
-        stage('Подключение базу к хранилищу конфигурации') {
+        stage('РџРѕРґРєР»СЋС‡РµРЅРёРµ Р±Р°Р·Сѓ Рє С…СЂР°РЅРёР»РёС‰Сѓ РєРѕРЅС„РёРіСѓСЂР°С†РёРё') {
 			agent { label "${dst_ib_agent_label}"}
             steps {
                 timestamps {
@@ -67,6 +67,6 @@ def cmd(command) {
     if (isUnix()) {
         sh "${command}"
     } else {
-        bat "chcp 1251\n${command}"
+        bat "chcp 65001\n${command}"
     }
 }
