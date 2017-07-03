@@ -14,16 +14,6 @@ pipeline {
 		dst_ib_storage_cred = credentials("${env.dst_ib_storage_cred}")
     }
 
-    stages {
-        stage('Получение копии из хранилища') {
-			agent { label "${env.dst_agent_label}"}
-            steps {
-                timestamps {
-					cmd("cpdb getyadisk \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -delsource");
-                }
-            }
-        }
-
         stage('Восстановление базы из резервной копии') {
 			agent { label "${env.dst_agent_label}"}
             steps {
