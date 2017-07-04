@@ -29,9 +29,8 @@ pipeline {
 			agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-					try{
+					cmd("cpdb umapdrive ${env.storage_drive_letter}");
 					cmd("cpdb mapdrive ${env.storage_drive_letter} ${env.storage_resource} -map-user ${storage_cred_Usr} -map-pwd ${storage_cred_Psw}");
-					} catch (error){}
 					cmd("cpdb copy \"${env.src_bak_path}\" ${env.storage_drive_letter}${env.storage_path} -delsource");
 					cmd("cpdb umapdrive ${env.storage_drive_letter}");
                 }
