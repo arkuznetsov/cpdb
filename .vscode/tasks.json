@@ -1,0 +1,50 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "windows": {
+        "command": "oscript.exe"
+    },
+    "linux": {
+        "command": "/opt/bin/oscript"
+    },
+     // Show the output window only if unrecognized errors occur.
+//    "args": [
+//      "-encoding=utf-8"
+//    ],
+    "tasks": [
+        {
+            "taskName": "Compile",
+            "type": "process",
+            "args": [
+                "-compile",
+                "${file}"
+            ],
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "suppressTaskName": true,
+            "isBuildCommand": true
+        },
+        {
+            "taskName": "Run",
+            "type": "process",
+            "args": [
+                "${file}"
+            ],
+            //"echoCommand": true,
+            "presentation": {
+                "echo": true,
+                "reveal": "always",
+                "focus": false,
+                "panel": "shared"
+            },
+            "suppressTaskName": true,
+            "problemMatcher": "$gulp-tsc",
+            "isBuildCommand": true
+        }
+    ]
+}
