@@ -27,7 +27,10 @@
                 "panel": "shared"
             },
             "suppressTaskName": true,
-            "isBuildCommand": true
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         },
         {
             "taskName": "Run",
@@ -35,7 +38,6 @@
             "args": [
                 "${file}"
             ],
-            //"echoCommand": true,
             "presentation": {
                 "echo": true,
                 "reveal": "always",
@@ -44,7 +46,10 @@
             },
             "suppressTaskName": true,
             "problemMatcher": "$gulp-tsc",
-            "isBuildCommand": true
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
         }
     ]
 }
