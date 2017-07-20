@@ -14,6 +14,8 @@
 * getyadisk   - Получение файла из Yandex-Диска
 * uconstorage - Отключить информационную базу от хранилища конфигураций
 * constorage  - Подключить информационную базу к хранилищу конфигураций
+* split       - Разбить файл на части (используется 7-Zip)
+* merge       - Соединить разбитый файл из частей
 
 Для подсказки по конкретной команде наберите help <команда>
 
@@ -143,6 +145,14 @@ cpdb uconstorage "/FD:/data/MyDatabase" -db-user Администратор -db-
 cpdb constorage "/FD:/data/MyDatabase" "tcp://MyServer/MyRepository" -db-user Администратор -db-pwd 123456 -storage-user MyDatabase_usr1 -storage-pwd 123456 -v8version 8.3.8 -uccode 1234
 ```
 
+## split - Разбить файл на части
+
+### Параметры
+
+
+## merge - Соединить файл из частей
+
+### Параметры
 
 ## Использование c Jenkins
 В jenkinsfile описан конвейр выполняющий следующий сценарий:
