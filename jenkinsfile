@@ -24,11 +24,19 @@ pipeline {
             }
         }
 
-        stage('Отправка копии в хранилище') {
-			agent { label "${env.src_agent_label}"}
+        stage('Разбиение на части') {
+            agent { label "${env.src_ib_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb putyadisk \"${env.src_bak_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -delsource");
+                    cmd("cpdb split \"${env.src_bak_path}\" -m 50m -hash");
+                }
+            }
+        }
+        stage('Отправка частей на Я-Диск') {
+            agent { label "${env.src_ib_agent_label}"}
+            steps {
+                timestamps {
+                    cmd('cpdb putyadisk \"${env.src_split_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -use-source-as-split');
                 }
             }
         }
@@ -57,22 +65,6 @@ pipeline {
 					cmd("cpdb uconstorage ${dst_ib_con_string} -db-user \"${dst_ib_cred_Usr}\" -db-pwd \"${dst_ib_cred_Psw}\"");
 					cmd("cpdb constorage ${dst_ib_con_string} ${dst_ib_storage_adr} -db-user \"${dst_ib_cred_Usr}\" -db-pwd \"${dst_ib_cred_Psw}\" -storage-user \"${dst_ib_storage_cred_Usr}\" -storage-pwd \"${dst_ib_storage_cred_Psw}\"");
                  }
-            }
-        }
-        stage('Разбиение на части') {
-            agent { label "${env.dst_ib_agent_label}"}
-            steps {
-                timestamps {
-                    cmd("cpdb split \"${env.src_bak_path}\" -m 50m -hash");
-                }
-            }
-        }
-        stage('Отправка частей на Я-Диск') {
-            agent { label "${env.dst_ib_agent_label}"}
-            steps {
-                timestamps {
-                    cmd('cpdb putyadisk \"${env.src_bak_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -use-source-as-split');
-                }
             }
         }
         

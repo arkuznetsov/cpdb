@@ -184,6 +184,7 @@ cpdb split "d:\MSSQL\Backup\MyDatabase_copy.bak" -v 40m -delsource
 * src_server_name     - Имя сервера MS SQL в системе-источнике
 * src_db_name         - Имя базы-источника
 * src_bak_path        - Путь к файлу резервной копии в системе-источнике
+* src_split_path      - Путь к split-файлу в системе-источнике
 
 * storage_token       - Token для доступа к Yandex-Диску
 * storage_path        - Путь к файлу на Yandex-Диск для передачи в систему-приемник
