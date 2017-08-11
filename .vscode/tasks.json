@@ -30,7 +30,10 @@
             "group": {
                 "kind": "build",
                 "isDefault": true
-            }
+            },
+            "problemMatcher": [
+                "$go"
+            ]
         },
         {
             "taskName": "OScript: check",
