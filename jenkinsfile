@@ -36,7 +36,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd('cpdb putyadisk \"${env.src_split_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -use-source-as-split');
+                    cmd("cpdb putyadisk \"${env.src_split_path}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -use-source-as-split");
                 }
             }
         }
