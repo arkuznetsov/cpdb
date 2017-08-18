@@ -28,7 +28,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb split \"${env.src_bak_path}\" -v 50m -hash");
+                    cmd("cpdb split \"${env.src_bak_path}\\${env.bak_file_name}\" -v 50m -hash");
                 }
             }
         }
