@@ -28,7 +28,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb split -source \"${env.src_bak_path}\\${env.bak_file_name}\" -list \"${env.src_bak_path}\\${env.list_file_name}\" -volume 50m -hash");
+                    cmd("cpdb split -source \"${env.src_bak_path}\\${env.bak_file_name}\" -list \"${env.src_bak_path}\\${env.list_file_name}\" -volume 50m -hash -delsource");
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb putyadisk -list \"${env.src_bak_path}\\${env.list_file_name}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\"");
+                    cmd("cpdb putyadisk -list \"${env.src_bak_path}\\${env.list_file_name}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -delsource");
                 }
             }
         }
@@ -46,6 +46,15 @@ pipeline {
                 timestamps {
 					cmd("cpdb getyadisk -path \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-list \"${env.storage_path}/${env.list_file_name}\" -delsource");
                 }
+            }
+        }
+
+        stage('Сборка частей') {
+			agent { label "${env.dst_agent_label}"}
+            steps {
+                timestamps {
+					cmd("cpdb merge -list \"${env.dst_bak_path}\\${env.list_file_name}\" -delsource");
+                 }
             }
         }
 
