@@ -28,7 +28,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb split \"${env.src_bak_path}\\${env.bak_file_name}\" -v 50m -hash");
+                    cmd("cpdb split -source \"${env.src_bak_path}\\${env.bak_file_name}\" -list \"${env.src_bak_path}\\${env.list_file_name}\" -volume 50m -hash");
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb putyadisk -list \"${env.src_bak_path}\\${env.file_name}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\"");
+                    cmd("cpdb putyadisk -list \"${env.src_bak_path}\\${env.list_file_name}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\"");
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb getyadisk -path \"${env.dst_bak_path}\\${env.file_name}\" -ya-token ${env.storage_token} -ya-list \"${env.storage_path}\" -delsource");
+					cmd("cpdb getyadisk -path \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-list \"${env.storage_path}\\${env.list_file_name}\" -delsource");
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb restore -sql-srvr ${env.dst_server_name} -sql-db ${env.dst_db_name} -sql-user ${dst_db_cred_Usr} -sql-pwd ${dst_db_cred_Psw} -bak-path \"${env.dst_bak_path}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-bakname ${env.src_db_name} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -delsource");
+					cmd("cpdb restore -sql-srvr ${env.dst_server_name} -sql-db ${env.dst_db_name} -sql-user ${dst_db_cred_Usr} -sql-pwd ${dst_db_cred_Psw} -bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-bakname ${env.src_db_name} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -delsource");
                  }
             }
         }
