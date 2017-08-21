@@ -1,106 +1,111 @@
 # SQL Database copier (cpdb)
 
-Копирование баз данных MS SQL и развертывание на целевой системе.
+Копирование баз данных 1C / MS SQL и развертывание на целевой системе.
 
 
-## Возможные команды
-
-* help        - Вывод справки по параметрам
-* backup      - Создание резервной копии базы MS SQL
-* restore     - Восстановление базы MS SQL из резервной копии
-* dumpib      - Выгрузить информационную базу в файл
-* restoreib   - Загрузить информационную базу из файла
-* putyadisk   - Помещение файла на Yandex-Диск
-* getyadisk   - Получение файла из Yandex-Диска
-* uconstorage - Отключить информационную базу от хранилища конфигураций
-* constorage  - Подключить информационную базу к хранилищу конфигураций
-* split       - Разбить файл на части (используется 7-Zip)
-* merge       - Соединить разбитый файл из частей
+| Возможные команды ||
+|-|-|
+| **help** | - Вывод справки по параметрам |
+| **backup** | - Создание резервной копии базы MS SQL |
+| **restore** | - Восстановление базы MS SQL из резервной копии |
+| **dumpib** | - Выгрузить информационную базу в файл |
+| **restoreib** | - Загрузить информационную базу из файла |
+| **putyadisk** | - Помещение файла на Yandex-Диск |
+| **getyadisk** | - Получение файла из Yandex-Диска |
+| **split** | - Разделить файл на части (используется 7-Zip) |
+| **merge** | - Собрать файл из частей (используется 7-Zip) |
+| **uconstorage** | - Отключить информационную базу от хранилища конфигураций |
+| **constorage** | - Подключить информационную базу к хранилищу конфигураций |
 
 Для подсказки по конкретной команде наберите help <команда>
 
 ## backup - Создание резервной копии базы MS SQL
 
-### Параметры:
-* <Сервер> - Адрес сервера MS SQL
-* <База>   - Имя базы для резервного копирования
-* -user    - Пользователь сервера
-* -pwd     - Пароль пользователя сервера
-* -path    - Путь к резервной копии
+| Параметры: ||
+|-|-|
+| **-sql-srvr** | - Адрес сервера MS SQL |
+| **-sql-db** | - Имя базы для восстановления |
+| **-sql-user** | - Пользователь сервера |
+| **-sql-pwd** | - Пароль пользователя сервера |
+| **-bak-path** | - Путь к резервной копии |
 
 #### Пример:
 ```
-cpdb backup MySQLName MyDatabase -user sa -pwd 12345 -path "d:\MSSQL\Backup\MyDatabase_copy.bak"
+cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path "d:\MSSQL\Backup\MyDatabase_copy.bak"
 ```
 
 ## restore - Восстановление базы MS SQL из резервной копии
 
-### Параметры:
+| Параметры: ||
+|-|-|
+| **-sql-srvr** | - Адрес сервера MS SQL |
+| **-sql-db** | - Имя базы для восстановления |
+| **-sql-user** | - Пользователь сервера |
+| **-sql-pwd** | - Пароль пользователя сервера |
+| **-bak-path** | - Путь к резервной копии |
+| **-create-db** | - Создать базу в случае отсутствия |
+| **-db-owner** | - Имя владельца базы после восстановления |
+| **-shrink-db** | - Сжать базу после восстановления |
+| **-db-bakname** | - Имя базы в файле резервной копии |
+| **-db-path** | - Путь к каталогу файлов данных базы после восстановления |
+| **-db-logpath** | - Путь к каталогу файлов журнала после восстановления |
+| **-delsource** | - Удалить файл резервной копии после восстановления | 
 
-* <Сервер>    - Адрес сервера MS SQL
-* <База>      - Имя базы для восстановления
-* -user       - Пользователь сервера
-* -pwd        - Пароль пользователя сервера
-* -path       - Путь к резервной копии
-* -create-db  - Создать базу в случае отсутствия
-* -db-owner   - Имя владельца базы после восстановления
-* -shrink-db  - Сжать базу после восстановления
-* -db-bakname - Имя базы в файле резервной копии
-* -db-path    - Путь к каталогу файлов данных базы после восстановления
-* -db-logpath - Путь к каталогу файлов журнала после восстановления
-* -delsource  - Удалить файл резервной копии после восстановления
-
+#### Пример:
 ```
-cpdb restore MyNewSQLServer MyDatabase_copy -user SQLUser -pwd 123456 -path "d:\data\MyBackUpfile.bak" -create-db -shrink-db -db-owner SQLdbo -db-bakname MyDatabase -db-path "d:\MSSQL\data" -db-logpath "e:\MSSQL\logs" -delsource
+cpdb restore -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -bak-path "d:\data\MyBackUpfile.bak" -create-db -shrink-db -db-owner SQLdbo -db-bakname MyDatabase -db-path "d:\MSSQL\data" -db-logpath "e:\MSSQL\logs" -delsource
 ```
 
 ## dumpib - Выгрузить информационную базу в файл
 
-### Параметры:
+| Параметры: ||
+|-|-|
+| **-ib-path** | - Строка подключения к ИБ |
+| **-ib-user** | - Пользователь ИБ |
+| **-ib-pwd** | - Пароль пользователя ИБ |
+| **-dt-path** | - Путь к файлу для выгрузки ИБ |
+| **-uccode** | - Ключ разрешения запуска ИБ |
+| **-v8version** | - Версия платформы 1С |
 
-* <СтрокаПодключения> - Строка подключения к ИБ
-* <ПутьКФайлу>        - Путь к файлу для выгрузки ИБ
-* -db-user            - Пользователь ИБ
-* -db-pwd             - Пароль пользователя ИБ
-* -v8version          - Маска версии платформы 1С
-* -uccode             - Ключ разрешения запуска ИБ
-
+#### Пример:
 ```
-cpdb dumpib "/FD:/data/MyDatabase" "d:\data\1Cv8.dt" -db-user Администратор -db-pwd 123456 -v8version 8.3.8 -uccode 1234
+cpdb dumpib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-user Администратор -ib-pwd 123456 -v8version 8.3.8 -uccode 1234
 ```
 
 ## restoreib - Загрузить информационную базу из файла
 
-### Параметры:
+| Параметры: ||
+|-|-|
+| **-ib-path** | - Строка подключения к ИБ |
+| **-ib-user** | - Пользователь ИБ |
+| **-ib-pwd** | - Пароль пользователя ИБ |
+| **-dt-path** | - Путь к файлу для загрузки в ИБ |
+| **-delsource** | - Удалить файл после загрузки |
+| **-uccode** | - Ключ разрешения запуска ИБ |
+| **-v8version** | - Версия платформы 1С |
 
-* <СтрокаПодключения> - Строка подключения к ИБ
-* <ПутьКФайлу>        - Путь к файлу для загрузки в ИБ
-* -db-user            - Пользователь ИБ
-* -db-pwd             - Пароль пользователя ИБ
-* -v8version          - Маска версии платформы 1С
-* -uccode             - Ключ разрешения запуска ИБ
-* -delsource          - Удалить файл после загрузки
-
+#### Пример:
 ```
-cpdb restoreib "/FD:/data/MyDatabase" "d:\data\1Cv8.dt" -db-user Администратор -db-pwd 123456 -v8version 8.3.8 -uccode 1234 -delsource
+cpdb restoreib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-user Администратор -ib-pwd 123456 -v8version 8.3.8 -uccode 1234 -delsource
 ```
 
 ## putyadisk - Помещение файла на Yandex-Диск
 
-### Параметры:
-
-* <ПутьКФайлу> - Путь к локальному файлу для помещения на Yandex-Диск
-* -ya-token    - Token авторизации
-* -ya-path     - Путь к файлу на Yandex-Диск
-* -delsource   - Удалить исходный файл после отправки
-* -use-source-as-split - Использовать исходный файл как список имен файлов для передачи
-* -check-hash  - Проверять соответствие хешей скопированных файлов. работает только в том случае, когда имеется файл                    <имяархива>.hash с MD5-хешами частей файлов (формируется командой split)
+| Параметры: ||
+|-|-|
+| **-file** | - Путь к локальному файлу для помещения на Yandex-Диск |
+| **-list** | - Путь к локальному файлу со списком файлов, которые будут помещены на Yandex-Диск (параметр -file игнорируется) |
+| **-ya-token** | - Token авторизации |
+| **-ya-path** | - Путь к каталогу на Yandex-Диск, куда помещать загружаемые файлы |
+| **-check-hash** | - (TBE) Проверять соответствие хешей скопированных файлов. Работает только в том случае, когда имеется файл <имяархива>.hash с MD5-хешами частей файлов (формируется командой split) |
+| **-delsource** | - Удалить исходные файлы после отправки |
 
 #### Пример:
 ```
-cpdb putyadisk "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsource
-
-cpdb putyadisk "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsource -use-source-as-split
+cpdb putyadisk -file "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsource
+```
+```
+cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsource
 
 ```
 
@@ -109,14 +114,20 @@ cpdb putyadisk "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXX
 
 ### Параметры:
 
-* <ПутьКФайлу> - Путь к локальному файлу для сохранения
-* -ya-token    - Token авторизации
-* -ya-path     - Путь к файлу на Yandex-Диск
-* -delsource   - Удалить файл из Yandex-Диск после получения
+| Параметры: ||
+|-|-|
+| **-path** | - Путь к локальному каталогу для сохранения загруженных файлов|
+| **-ya-token** | - Token авторизации |
+| **-ya-file** | - Путь к файлу на Yandex-Диск для загрузки |
+| **-ya-list** | - Путь к файлу на Yandex-Диск со списком файлов, которые будут загружены (параметр -ya-file игнорируется) |
+| **-delsource** | - Удалить файлы из Yandex-Диск после получения |
 
 #### Пример:
 ```
-cpdb getyadisk "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsource
+cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-file "/transfer/MyDatabase_copy.bak" -delsource
+```
+```
+cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-list "/transfer/MyDatabase_copy.split" -delsource
 ```
 
 ## uconstorage - Отключить информационную базу от хранилища конфигурации
@@ -143,7 +154,7 @@ cpdb uconstorage "/FD:/data/MyDatabase" -db-user Администратор -db-
 * -db-pwd             - Пароль пользователя ИБ
 * -storage-user       - Пользователь хранилища конфигурации
 * -storage-pwd        - Пароль пользователя хранилища конфигурации
-* -v8version          - Маска версии платформы 1С
+| **-v8version** | - Версия платформы 1С |
 * -uccode             - Ключ разрешения запуска ИБ
 
 ```
@@ -170,9 +181,10 @@ cpdb split "d:\MSSQL\Backup\MyDatabase_copy.bak" -v 40m -delsource
 ### Параметры
 
 ## Использование c Jenkins
-В jenkinsfile описан конвейр выполняющий следующий сценарий:
+В jenkinsfile описан конвейер, выполняющий следующий сценарий:
 * Создание резервной копии указанной базы на системе-источнике
-* Копирование файла резервной копии на Yandex-Диск
+* Разбиение резервной копии на части (используется 7-Zip)
+* Копирование частей файла на Yandex-Диск (в указанный каталог)
 * Получение файла резервной копии из Yandex-Диск на системе-приемнике
 * Восстановление указанной базы из резервной копии
 * Подключает базу к хранилищу конфигурации
