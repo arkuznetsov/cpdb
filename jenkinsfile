@@ -44,7 +44,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb getyadisk -path \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-list \"${env.storage_path}\\${env.list_file_name}\" -delsource");
+					cmd("cpdb getyadisk -path \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-list \"${env.storage_path}/${env.list_file_name}\" -delsource");
                 }
             }
         }
