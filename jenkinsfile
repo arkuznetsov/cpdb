@@ -62,7 +62,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb restore -sql-srvr ${env.dst_server_name} -sql-db ${env.dst_db_name} -sql-user ${dst_db_cred_Usr} -sql-pwd ${dst_db_cred_Psw} -bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-bakname ${env.src_db_name} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\"");
+					cmd("cpdb restore -sql-srvr ${env.dst_server_name} -sql-db ${env.dst_db_name} -sql-user ${dst_db_cred_Usr} -sql-pwd ${dst_db_cred_Psw} -bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -db-recovery SIMPLE -db-changelfn");
                  }
             }
         }
