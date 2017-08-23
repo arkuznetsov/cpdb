@@ -11,6 +11,7 @@
 
 Требуются следующие библиотеки и инструменты:
 - [cmdline](https://github.com/oscript-library/cmdline)
+- [1commands](https://github.com/artbear/1commands)
 - [logos](https://github.com/oscript-library/logos)
 - [v8runner](https://github.com/oscript-library/v8runner)
 - [ReadParams](https://github.com/Stepa86/ReadParams)
@@ -68,14 +69,15 @@ cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path
 | **-create-db** | - Создать базу в случае отсутствия |
 | **-db-owner** | - Имя владельца базы после восстановления |
 | **-shrink-db** | - Сжать базу после восстановления |
-| **-db-bakname** | - Имя базы в файле резервной копии |
 | **-db-path** | - Путь к каталогу файлов данных базы после восстановления |
 | **-db-logpath** | - Путь к каталогу файлов журнала после восстановления |
+| **-db-recovery** | - Установить модель восстановления (RECOVERY MODEL), возможные значения "FULL", "SIMPLE", "BULK_LOGGED" |
+| **-db-changelfn** | - Изменить логические имена файлов (LFN) базы, в соответствии с именем базы |
 | **-delsrc** | - Удалить файл резервной копии после восстановления | 
 
 #### Пример:
 ```
-cpdb restore -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -bak-path "d:\data\MyBackUpfile.bak" -create-db -shrink-db -db-owner SQLdbo -db-bakname MyDatabase -db-path "d:\MSSQL\data" -db-logpath "e:\MSSQL\logs" -delsrc
+cpdb restore -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -bak-path "d:\data\MyBackUpfile.bak" -create-db -shrink-db -db-owner SQLdbo -db-path "d:\MSSQL\data" -db-logpath "e:\MSSQL\logs" -db-recovery SIMPLE -delsrc
 ```
 
 
