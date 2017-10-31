@@ -24,6 +24,7 @@
 | **help** | - Вывод справки по параметрам |
 | **backup** | - Создание резервной копии базы MS SQL |
 | **restore** | - Восстановление базы MS SQL из резервной копии |
+| **compress** | - Выполнить компрессию страниц таблиц и индекстов в базе MS SQL |
 | **dumpib** | - Выгрузить информационную базу в файл |
 | **restoreib** | - Загрузить информационную базу из файла |
 | **putyadisk** | - Помещение файла на Yandex-Диск |
@@ -79,6 +80,23 @@ cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path
 #### Пример:
 ```
 cpdb restore -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -bak-path "d:\data\MyBackUpfile.bak" -create-db -shrink-db -db-owner SQLdbo -db-path "d:\MSSQL\data" -db-logpath "e:\MSSQL\logs" -db-recovery SIMPLE -delsrc
+```
+
+
+## compress - Выполнить компрессию страниц таблиц и индекстов в базе MS SQL
+
+| Параметры: ||
+|-|-|
+| **-params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **-sql-srvr** | - Адрес сервера MS SQL |
+| **-sql-db** | - Имя базы для восстановления |
+| **-sql-user** | - Пользователь сервера |
+| **-sql-pwd** | - Пароль пользователя сервера |
+| **-shrink-db** | - Сжать базу после выполнения компрессии |
+
+#### Пример:
+```
+cpdb compress -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -shrink-db
 ```
 
 
