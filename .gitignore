@@ -1,3 +1,4 @@
 tests\*.*
 *.ospx
 .vscode/*.*
+scripts/ex_batch.json
