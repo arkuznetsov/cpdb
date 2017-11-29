@@ -36,6 +36,7 @@
 | **merge** | - Разархивировать файл (используется 7-Zip) |
 | **uconstorage** | - Отключить информационную базу от хранилища конфигураций |
 | **constorage** | - Подключить информационную базу к хранилищу конфигураций |
+| **batch** | - Последовательное выполнение команд по сценариям, заданным в файлах (json) |
 
 Для подсказки по конкретной команде наберите help <команда>
 
@@ -296,6 +297,69 @@ cpdb uconstorage -ib-path "/FD:/data/MyDatabase" -ib-user Администрат
 
 ```
 cpdb constorage -ib-path "/FD:/data/MyDatabase" -ib-user Администратор -ib-pwd 123456 -storage-path "tcp://MyServer/MyRepository" -storage-user MyDatabase_usr1 -storage-pwd 123456 -v8version 8.3.8 -uccode 1234
+```
+
+## batch - Выполнить сценарий
+
+Последовательно выполняет команды указнные в файле JSON
+
+
+| Параметры: ||
+|-|-|
+| **\<Сценарии\>** | - Файлы JSON содержащие команды и значения параметров, могут быть указаны несколько файлов разделенные "";"" (обработка файлов выполняется в порядке следования) |
+
+
+#### Пример:
+```
+cpdb batch "./rest_TST_DB_MyDomain.json"
+```
+
+#### Пример сценария:
+```
+{
+    "params": {},
+    "stages": {
+        "Восстановление": {
+            "description": "Восстановление из резервной копии",
+            "tool": "cpdb",
+            "command": "restore",
+            "params": {
+                "-sql-srvr": "MySQLServer",
+                "-sql-user": "_1CSrvUsr1",
+                "-sql-pwd": "p@ssw0rd",
+                "-bak-path": "d:\\tmp\\PRD_DB_MyDomain.bak",
+                "-sql-db": "TST_DB_MyDomain",
+                "-db-owner": "_1CSrvUsr1",
+                "-db-path": "D:\\sqldata",
+                "-db-logpath": "D:\\sqldata",
+                "-db-recovery": "SIMPLE",
+                "-db-changelfn": "Истина"
+            }
+        },
+        "Отключение": {
+            "description": "Отключение от хранилища",
+            "tool": "cpdb",
+            "command": "uconstorage",
+            "params": {
+                "-ib-path": "/SSport1\\TST_DB_MyDomain",
+                "-ib-user": "\"1C User\"",
+                "-ib-pwd": "p@ssw0rd"
+            }
+        },
+        "Сжатие": {
+            "description": "Сжатие базы данных",
+            "tool": "cpdb",
+            "command": "compress",
+            "params": {
+                "-sql-srvr": "Sport1",
+                "-sql-user": "_1CSrvUsr1",
+                "-sql-pwd": "p@ssw0rd",
+                "-sql-db": "TST_DB_MyDomain",
+                "-shrink-db": "Истина"
+            }
+        }
+    }
+}
 ```
 
 ## Использование c Jenkins
