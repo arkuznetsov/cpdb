@@ -361,7 +361,7 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
                 "-db-path": "D:\\sqldata",
                 "-db-logpath": "D:\\sqldata",
                 "-db-recovery": "SIMPLE",
-                "-db-changelfn": "Истина"
+                "-db-changelfn": true
             }
         },
         "Отключение": {
@@ -383,7 +383,7 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
                 "-sql-user": "_1CSrvUsr1",
                 "-sql-pwd": "p@ssw0rd",
                 "-sql-db": "TST_DB_MyDomain",
-                "-shrink-db": "Истина"
+                "-shrink-db": true
             }
         }
     }
