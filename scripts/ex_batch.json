@@ -8,6 +8,7 @@
             "params": {
                 "-ib-srvr": "Sport1",
                 "-ib-ref": "TST_CPDB",
+                "-dbms": "MSSQLServer",
                 "-db-srvr": "Sport1",
                 "-db-user": "_1CSrvUsr1",
                 "-db-pwd": "q2w3e4r5",
