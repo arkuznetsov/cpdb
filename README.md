@@ -17,6 +17,7 @@
 - [ReadParams](https://github.com/Stepa86/ReadParams)
 - [yadisk](https://github.com/kuntashov/oscript-yadisk)
 - [7-zip](http://www.7-zip.org/)
+- [MS Command Line Utilities for SQL Server (sqlcmd)](https://www.microsoft.com/en-us/download/details.aspx?id=53591)
 
 
 | Возможные команды ||
