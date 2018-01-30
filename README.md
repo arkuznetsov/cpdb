@@ -55,7 +55,7 @@
 | **-bak-path** | - Путь к резервной копии |
 
 #### Пример:
-```
+```bat
 cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path "d:\MSSQL\Backup\MyDatabase_copy.bak"
 ```
 
@@ -81,7 +81,7 @@ cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path
 | **-delsrc** | - Удалить файл резервной копии после восстановления | 
 
 #### Пример:
-```
+```bat
 cpdb restore -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -bak-path "d:\data\MyBackUpfile.bak" -create-db -shrink-db -db-owner SQLdbo -db-path "d:\MSSQL\data" -db-logpath "e:\MSSQL\logs" -db-recovery SIMPLE -delsrc
 ```
 
@@ -98,7 +98,7 @@ cpdb restore -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser 
 | **-shrink-db** | - Сжать базу после выполнения компрессии |
 
 #### Пример:
-```
+```bat
 cpdb compress -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser -sql-pwd 123456 -shrink-db
 ```
 
@@ -126,7 +126,7 @@ cpdb compress -sql-srvr MyNewSQLServer -sql-db MyDatabase_copy -sql-user SQLUser
 | **-v8version** | - Версия платформы 1С |
 
 #### Пример:
-```
+```bat
 cpdb createib -ib-srvr My1CServer -ib-ref TST_DB_MyDomain -db-srvr MySQLServer -db-user _1CSrvUsr1 -db-pwd p@ssw0rd -db-name TST_DB_MyDomain -createdb -nameinlist "My test base" -errifexist
 ```
 
@@ -143,7 +143,7 @@ cpdb createib -ib-srvr My1CServer -ib-ref TST_DB_MyDomain -db-srvr MySQLServer -
 | **-v8version** | - Версия платформы 1С |
 
 #### Пример:
-```
+```bat
 cpdb dumpib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-user Администратор -ib-pwd 123456 -v8version 8.3.8 -uccode 1234
 ```
 
@@ -162,7 +162,7 @@ cpdb dumpib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-user 
 | **-v8version** | - Версия платформы 1С |
 
 #### Пример:
-```
+```bat
 cpdb restoreib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-user Администратор -ib-pwd 123456 -v8version 8.3.8 -uccode 1234 -delsrc
 ```
 
@@ -180,10 +180,10 @@ cpdb restoreib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-us
 | **-delsrc** | - Удалить исходные файлы после отправки |
 
 #### Пример:
-```
+```bat
 cpdb putyadisk -file "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsrc
 ```
-```
+```bat
 cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsrc
 
 ```
@@ -203,10 +203,10 @@ cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXX
 | **-delsrc** | - Удалить файлы из Yandex-Диск после получения |
 
 #### Пример:
-```
+```bat
 cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-file "/transfer/MyDatabase_copy.bak" -delsrc
 ```
-```
+```bat
 cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-list "/transfer/MyDatabase_copy.split" -delsrc
 ```
 
@@ -222,7 +222,7 @@ cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXX
 | **-map-pwd** | - Пароль для подключения |
 
 #### Пример:
-```
+```bat
 cpdb mapdrive -map-drive N -map-res "\\MyServer\MyFolder" -map-user superuser -map-pwd P@$$w0rd
 ``` 
 
@@ -235,7 +235,7 @@ cpdb mapdrive -map-drive N -map-res "\\MyServer\MyFolder" -map-user superuser -m
 | **-map-drive** | - Имя устройства (буква диска) |
 
 #### Пример:
-```
+```bat
 cpdb umapdrive -map-drive N
 ``` 
 
@@ -251,7 +251,7 @@ cpdb umapdrive -map-drive N
 | **-delsrc** | - Выполнить перемещение файлов (удалить источник после копирования) |
 
 #### Пример:
-```
+```bat
 cpdb copy -src "d:\MSSQL\Backup\MyDatabase_copy.bak" -dst "N:\NewDestination\" -replace -delsrc
 ```
 
@@ -271,7 +271,7 @@ cpdb copy -src "d:\MSSQL\Backup\MyDatabase_copy.bak" -dst "N:\NewDestination\" -
 | **-delsrc** | - Удалить исходный файл после выполнения операции |
 
 #### Пример:
-```
+```bat
 cpdb split "d:\MSSQL\Backup\MyDatabase_copy.bak" -list "d:\MSSQL\Backup\MyDatabase_copy.split" -vol 40m -delsrc
 ```
 
@@ -287,10 +287,10 @@ cpdb split "d:\MSSQL\Backup\MyDatabase_copy.bak" -list "d:\MSSQL\Backup\MyDataba
 | **-delsrc** | - Удалить исходные файлы после выполнения операции |
 
 #### Пример:
-```
+```bat
 cpdb merge -file "d:\MSSQL\Backup\MyDatabase_copy.7z.001" -delsrc
 ```
-```
+```bat
 cpdb merge -list "d:\MSSQL\Backup\MyDatabase_copy.split" -delsrc
 ```
 
@@ -306,7 +306,7 @@ cpdb merge -list "d:\MSSQL\Backup\MyDatabase_copy.split" -delsrc
 | **-v8version** | - Маска версии платформы 1С");
 | **-uccode** | - Ключ разрешения запуска ИБ");
 
-```
+```bat
 cpdb uconstorage -ib-path "/FD:/data/MyDatabase" -ib-user Администратор -ib-pwd 123456 -v8version 8.3.8 -uccode 1234
 ```
 
@@ -324,7 +324,7 @@ cpdb uconstorage -ib-path "/FD:/data/MyDatabase" -ib-user Администрат
 | **-v8version** | - Маска версии платформы 1С |
 | **-uccode** | - Ключ разрешения запуска ИБ |
 
-```
+```bat
 cpdb constorage -ib-path "/FD:/data/MyDatabase" -ib-user Администратор -ib-pwd 123456 -storage-path "tcp://MyServer/MyRepository" -storage-user MyDatabase_usr1 -storage-pwd 123456 -v8version 8.3.8 -uccode 1234
 ```
 
@@ -339,12 +339,12 @@ cpdb constorage -ib-path "/FD:/data/MyDatabase" -ib-user Администрат�
 
 
 #### Пример:
-```
+```bat
 cpdb batch "./rest_TST_DB_MyDomain.json"
 ```
 
 #### Пример сценария:
-```
+```json
 {
     "params": {},
     "stages": {
