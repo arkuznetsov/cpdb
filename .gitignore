@@ -1,3 +1,4 @@
 tests\*.*
 *.ospx
 .vscode/*.*
+sonarlint.json
