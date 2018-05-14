@@ -1,4 +1,8 @@
 # 1C Database copier (cpdb)
+[![Build Status](https://travis-ci.org/arkuznetsov/cpdb.svg?branch=develop)](https://travis-ci.org/arkuznetsov/cpdb)
+[![Quality Gate](https://sonar.silverbulleters.org/api/badges/gate?key=opensource-cpdb)](https://sonar.silverbulleters.org/dashboard/index/opensource-cpdb)
+[![Coverage](https://sonar.silverbulleters.org/api/badges/measure?key=opensource-cpdb&metric=coverage)](https://sonar.silverbulleters.org/dashboard/index/opensource-cpdb)
+[![Tech debt](https://sonar.silverbulleters.org/api/badges/measure?key=opensource-cpdb&metric=sqale_debt_ratio)](https://sonar.silverbulleters.org/dashboard/index/opensource-cpdb)
 
 Набор скриптов oscript для копирования баз данных 1C / MS SQL и развертывания на целевой системе.
 Типичный сценарий работы:
