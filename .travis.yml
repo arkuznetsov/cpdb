@@ -21,6 +21,9 @@ install:
   - sudo opm install 
   - sudo opm install 1testrunner
   - sudo opm install v8runner
+  - sudo opm install readparams
+  - sudo opm install yadisk
+  - sudo opm install cmdline
   - sudo opm install -f ./moskito/moskito-0.1.0.ospx
   - sudo opm install -f ./testrunner/1testrunner-1.5.3.ospx
   
