@@ -2,7 +2,7 @@
 #!/bin/bash
 set -e
 
-#sudo opm run coverage
+sudo opm run coverage
 
 temp=`cat packagedef | grep ".Версия(" | sed 's|[^"]*"||' | sed -r 's/".+//'`
 version=${temp##*|}
