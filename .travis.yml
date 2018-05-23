@@ -26,7 +26,7 @@ install:
   - sudo opm install cmdline
   - sudo opm install -f ./moskito/moskito-0.1.0.ospx
   - sudo opm install -f ./testrunner/1testrunner-1.5.3.ospx
-  
+  - sudo opm list
 cache:
   directories:
     - '$HOME/.m2/repository'
