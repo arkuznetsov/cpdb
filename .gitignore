@@ -1,4 +1,7 @@
-tests\*.*
-*.ospx
 .vscode/*.*
 sonarlint.json
+
+\.sonar/
+test-reports/
+coverage/
+*.ospx
