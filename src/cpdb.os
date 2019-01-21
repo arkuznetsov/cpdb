@@ -1,5 +1,5 @@
 #Использовать cmdline
-#Использовать readparams
+#Использовать ReadParams
 #Использовать v8runner
 #Использовать yadisk
 #Использовать logos
