@@ -48,7 +48,7 @@
 		Возврат Ложь;
 	КонецЕсли;
 
-	ТекстЗапроса = """USE [master]; CREATE DATABASE " + База + "; ALTER DATABASE " + База + " SET RECOVERY SIMPLE""";
+	ТекстЗапроса = """USE [master]; CREATE DATABASE [" + База + "]; ALTER DATABASE [" + База + "] SET RECOVERY SIMPLE""";
 	
 	КодВозврата = ВыполнитьЗапросСУБД(ТекстЗапроса, ОписаниеРезультата);
 	
@@ -257,12 +257,12 @@
 	ЛогическоеИмяФайлаЖурнала = ПолучитьЛогическоеИмяФайлаВРезервнойКопии(ПутьКРезервнойКопии, "L");
 
 	ТекстЗапроса = """USE [master]; "
-				 + "ALTER DATABASE " + База + " SET SINGLE_USER WITH ROLLBACK IMMEDIATE; "
+				 + "ALTER DATABASE [" + База + "] SET SINGLE_USER WITH ROLLBACK IMMEDIATE; "
 				 + "RESTORE DATABASE [" + База + "] FROM  DISK = N'" + ПутьКРезервнойКопии + "' WITH  FILE = 1, "
 						+ "MOVE N'" + ЛогическоеИмяФайлаДанных + "' TO N'" + ПутьКФайлуДанных + "\" + База + ".mdf', "
 						+ "MOVE N'" + ЛогическоеИмяФайлаЖурнала + "' TO N'" + ПутьКФайлуЖурнала + "\" + База + "_log.ldf',"
 						+ "NOUNLOAD,  REPLACE,  STATS = 10; "
-				 + "ALTER DATABASE " + База + " SET MULTI_USER""";
+				 + "ALTER DATABASE [" + База + "] SET MULTI_USER""";
 	
 	КодВозврата = ВыполнитьЗапросСУБД(ТекстЗапроса, ОписаниеРезультата);
 
