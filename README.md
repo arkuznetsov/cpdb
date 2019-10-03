@@ -1,8 +1,10 @@
 # 1C Database copier (cpdb)
+[![GitHub release](https://img.shields.io/github/release/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
+[![GitHub license](https://img.shields.io/github/license/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/blob/develop/LICENSE.md)
 [![Build Status](https://travis-ci.org/arkuznetsov/cpdb.svg?branch=develop)](https://travis-ci.org/arkuznetsov/cpdb)
-[![Quality Gate](https://sonar.silverbulleters.org/api/badges/gate?key=opensource-cpdb)](https://sonar.silverbulleters.org/dashboard/index/opensource-cpdb)
-[![Coverage](https://sonar.silverbulleters.org/api/badges/measure?key=opensource-cpdb&metric=coverage)](https://sonar.silverbulleters.org/dashboard/index/opensource-cpdb)
-[![Tech debt](https://sonar.silverbulleters.org/api/badges/measure?key=opensource-cpdb&metric=sqale_debt_ratio)](https://sonar.silverbulleters.org/dashboard/index/opensource-cpdb)
+[![Quality Gate](https://oskk-sonar.1solution.ru/api/badges/gate?key=cpdb)](https://oskk-sonar.1solution.ru/dashboard/index/cpdb)
+[![Coverage](https://oskk-sonar.1solution.ru/api/badges/measure?key=cpdb&metric=coverage)](https://oskk-sonar.1solution.ru/dashboard/index/cpdb)
+[![Tech debt](https://oskk-sonar.1solution.ru/api/badges/measure?key=cpdb&metric=sqale_debt_ratio)](https://oskk-sonar.1solution.ru/dashboard/index/cpdb)
 
 Набор скриптов oscript для копирования баз данных 1C / MS SQL и развертывания на целевой системе.
 Типичный сценарий работы:
