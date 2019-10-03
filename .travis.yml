@@ -3,7 +3,7 @@ dist: trusty
 addons:
   sonarqube: true
 jdk:
-  - oraclejdk8
+  - openjdk11
 before_install: 
   - chmod +x travis.sh
   - sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF
@@ -13,10 +13,6 @@ before_install:
   - wget -O os.deb http://oscript.io/downloads/night-build/deb
   - sudo dpkg -i os.deb; sudo apt install -f
   - oscript
-  - sudo git clone -b develop http://github.com/arkuznetsov/moskito ./moskito
-  - sudo opm build ./moskito -out ./moskito
-  - sudo git clone -b develop http://github.com/arkuznetsov/1testrunner ./testrunner
-  - sudo opm build ./testrunner -out ./testrunner
 install:  
   - sudo opm install 
   - sudo opm install 1testrunner
@@ -24,8 +20,7 @@ install:
   - sudo opm install readparams
   - sudo opm install yadisk
   - sudo opm install cmdline
-  - sudo opm install -f ./moskito/moskito-0.1.0.ospx
-  - sudo opm install -f ./testrunner/1testrunner-1.5.3.ospx
+  - sudo opm install moskito
   - sudo opm list
 cache:
   directories:
