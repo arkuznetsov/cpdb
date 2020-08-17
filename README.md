@@ -329,6 +329,7 @@ cpdb uconstorage -ib-path "/FD:/data/MyDatabase" -ib-user Администрат
 | **-storage-pwd** | - Пароль пользователя хранилища конфигурации |
 | **-v8version** | - Маска версии платформы 1С |
 | **-uccode** | - Ключ разрешения запуска ИБ |
+| **-update-ib** | - Выполнить обновление ИБ (применить полученную из хранилища конфигурацию к ИБ) |
 
 ```bat
 cpdb constorage -ib-path "/FD:/data/MyDatabase" -ib-user Администратор -ib-pwd 123456 -storage-path "tcp://MyServer/MyRepository" -storage-user MyDatabase_usr1 -storage-pwd 123456 -v8version 8.3.8 -uccode 1234
