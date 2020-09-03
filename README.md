@@ -84,7 +84,7 @@ cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path
 | **-db-logpath** | - Путь к каталогу файлов журнала после восстановления |
 | **-db-recovery** | - Установить модель восстановления (RECOVERY MODEL), возможные значения "FULL", "SIMPLE", "BULK_LOGGED" |
 | **-db-changelfn** | - Изменить логические имена файлов (LFN) базы, в соответствии с именем базы |
-| **-delsrc** | - Удалить файл резервной копии после восстановления | 
+| **-delsrc** | - Удалить файл резервной копии после восстановления |
 
 #### Пример:
 ```bat
@@ -187,10 +187,10 @@ cpdb restoreib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-us
 
 #### Пример:
 ```bat
-cpdb putyadisk -file "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsrc
+cpdb putyadisk -file "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer" -delsrc
 ```
 ```bat
-cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsrc
+cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer" -delsrc
 
 ```
 
@@ -216,6 +216,20 @@ cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXX
 cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-list "/transfer/MyDatabase_copy.split" -delsrc
 ```
 
+##### Для получения токена авторизации Яндекс-диска:
+
+* Зарегистрировать приложение: https://oauth.yandex.ru/client/new
+	* Название приложения, например "OScript.YaDisk"
+	* Платформы "Веб-сервисы"
+	* Callback URI #1:  https://oauth.yandex.ru/verification_code
+* Дать нужные права для приложения
+	* Сервис Яндекс.Диск REST API
+	  	* Запись в любом месте на Диске
+	  	  	* Чтение всего Диска
+	  	  	* Доступ к информации о Диске 
+* Нажать "Создать приложение" внизу формы: после этого будет показан ID пароль, прочие параметры созданного приложения
+* Получить токен для приложения: перейти по ссылке https://oauth.yandex.ru/authorize?response_type=token&client_id=<ВАШ ID (ID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)>
+* На вопрос "Приложение OScript.YaDisk запрашивает доступ к вашим данным на Яндексе" ответить "Разрешить": после этого на экране появится сформированный токен
 
 ## mapdrive - Подключить сетевой диск
 
@@ -230,7 +244,7 @@ cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXX
 #### Пример:
 ```bat
 cpdb mapdrive -map-drive N -map-res "\\MyServer\MyFolder" -map-user superuser -map-pwd P@$$w0rd
-``` 
+```
 
 
 ## umapdrive - Отключить сетевой диск
@@ -243,7 +257,7 @@ cpdb mapdrive -map-drive N -map-res "\\MyServer\MyFolder" -map-user superuser -m
 #### Пример:
 ```bat
 cpdb umapdrive -map-drive N
-``` 
+```
 
 
 ## copy - скопировать/переместить файлы
