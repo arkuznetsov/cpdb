@@ -84,7 +84,7 @@ cpdb backup -sql-srvr MySQLName MyDatabase -sql-user sa -sql-pwd 12345 -bak-path
 | **-db-logpath** | - Путь к каталогу файлов журнала после восстановления |
 | **-db-recovery** | - Установить модель восстановления (RECOVERY MODEL), возможные значения "FULL", "SIMPLE", "BULK_LOGGED" |
 | **-db-changelfn** | - Изменить логические имена файлов (LFN) базы, в соответствии с именем базы |
-| **-delsrc** | - Удалить файл резервной копии после восстановления | 
+| **-delsrc** | - Удалить файл резервной копии после восстановления |
 
 #### Пример:
 ```bat
@@ -187,10 +187,10 @@ cpdb restoreib -ib-path "/FD:/data/MyDatabase" -dt-path "d:\data\1Cv8.dt" -ib-us
 
 #### Пример:
 ```bat
-cpdb putyadisk -file "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsrc
+cpdb putyadisk -file "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer" -delsrc
 ```
 ```bat
-cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer/MyDatabase_copy.bak" -delsrc
+cpdb putyadisk -list "d:\MSSQL\Backup\MyDatabase_copy.split" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-path "/transfer" -delsrc
 
 ```
 
@@ -216,6 +216,20 @@ cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXX
 cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX -ya-list "/transfer/MyDatabase_copy.split" -delsrc
 ```
 
+##### Для получения токена авторизации Яндекс-диска:
+
+* Зарегистрировать приложение: https://oauth.yandex.ru/client/new
+	* Название приложения, например "OScript.YaDisk"
+	* Платформы "Веб-сервисы"
+	* Callback URI #1:  https://oauth.yandex.ru/verification_code
+* Дать нужные права для приложения
+	* Сервис Яндекс.Диск REST API
+	  	* Запись в любом месте на Диске
+	  	  	* Чтение всего Диска
+	  	  	* Доступ к информации о Диске 
+* Нажать "Создать приложение" внизу формы: после этого будет показан ID пароль, прочие параметры созданного приложения
+* Получить токен для приложения: перейти по ссылке https://oauth.yandex.ru/authorize?response_type=token&client_id=<ВАШ ID (ID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)>
+* На вопрос "Приложение OScript.YaDisk запрашивает доступ к вашим данным на Яндексе" ответить "Разрешить": после этого на экране появится сформированный токен
 
 ## mapdrive - Подключить сетевой диск
 
@@ -230,7 +244,7 @@ cpdb getyadisk -path "d:\MSSQL\Backup\MyDatabase_copy.bak" -ya-token XXXXXXXXXXX
 #### Пример:
 ```bat
 cpdb mapdrive -map-drive N -map-res "\\MyServer\MyFolder" -map-user superuser -map-pwd P@$$w0rd
-``` 
+```
 
 
 ## umapdrive - Отключить сетевой диск
@@ -243,7 +257,7 @@ cpdb mapdrive -map-drive N -map-res "\\MyServer\MyFolder" -map-user superuser -m
 #### Пример:
 ```bat
 cpdb umapdrive -map-drive N
-``` 
+```
 
 
 ## copy - скопировать/переместить файлы
@@ -329,6 +343,7 @@ cpdb uconstorage -ib-path "/FD:/data/MyDatabase" -ib-user Администрат
 | **-storage-pwd** | - Пароль пользователя хранилища конфигурации |
 | **-v8version** | - Маска версии платформы 1С |
 | **-uccode** | - Ключ разрешения запуска ИБ |
+| **-update-ib** | - Выполнить обновление ИБ (применить полученную из хранилища конфигурацию к ИБ) |
 
 ```bat
 cpdb constorage -ib-path "/FD:/data/MyDatabase" -ib-user Администратор -ib-pwd 123456 -storage-path "tcp://MyServer/MyRepository" -storage-user MyDatabase_usr1 -storage-pwd 123456 -v8version 8.3.8 -uccode 1234
@@ -348,6 +363,7 @@ cpdb constorage -ib-path "/FD:/data/MyDatabase" -ib-user Администрат�
 ```bat
 cpdb batch "./rest_TST_DB_MyDomain.json"
 ```
+
 
 #### Пример сценария:
 ```json
@@ -396,6 +412,37 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
     }
 }
 ```
+
+## scripts - Выполнить скрипты из файла(ов)
+
+| Параметры: ||
+|-|-|
+| **-params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **-sql-srvr** | - Адрес сервера MS SQL |
+| **-sql-user** | - Пользователь сервера |
+| **-sql-pwd** | - Пароль пользователя сервера |
+| **-sql-files** | - Файлы SQL, содержащие текст скрипта, могут быть указаны несколько файлов, разделённые ";" |
+| **-sql-vars** | - Строка переменных (без пробелов) для скриптов SQL, имя переменной и значение разделены "=", переменные разделены ";" |
+
+#### Пример:
+```bat
+cpdb scripts -params "./JSON/cpdb_env.json" -sql-files "./tools/config_error.sql;./tools/print_message.sql" -sql-vars "varBase=MyDB;message=\"Hello world\""
+```
+
+#### Пример config_error.sql:
+```sql
+use $(varBase)
+go
+truncate table [dbo].[ConfigSave]
+go
+UPDATE SchemaStorage SET Status = 100
+```
+
+#### Пример print_message.sql:
+```sql
+PRINT N'$(message)'
+```
+
 
 ## Использование c Jenkins
 В jenkinsfile описан конвейер, выполняющий следующий сценарий:
