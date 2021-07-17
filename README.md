@@ -2,9 +2,9 @@
 [![GitHub release](https://img.shields.io/github/release/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
 [![GitHub license](https://img.shields.io/github/license/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/blob/develop/LICENSE.md)
 [![Build Status](https://travis-ci.org/arkuznetsov/cpdb.svg?branch=develop)](https://travis-ci.org/arkuznetsov/cpdb)
-[![Quality Gate](https://oskk-sonar.1solution.ru/api/badges/gate?key=cpdb)](https://oskk-sonar.1solution.ru/dashboard/index/cpdb)
-[![Coverage](https://oskk-sonar.1solution.ru/api/badges/measure?key=cpdb&metric=coverage)](https://oskk-sonar.1solution.ru/dashboard/index/cpdb)
-[![Tech debt](https://oskk-sonar.1solution.ru/api/badges/measure?key=cpdb&metric=sqale_debt_ratio)](https://oskk-sonar.1solution.ru/dashboard/index/cpdb)
+[![Quality Gate](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=alert_status)](https://open.checkbsl.org/dashboard/index/cpdb)
+[![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=coverage)](https://open.checkbsl.org/dashboard/index/cpdb)
+[![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/cpdb)
 
 Набор скриптов oscript для копирования баз данных 1C / MS SQL и развертывания на целевой системе.
 Типичный сценарий работы:
