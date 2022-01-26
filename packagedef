@@ -16,4 +16,4 @@
 		.ВключитьФайл("lib.config")
 		.ВключитьФайл("README.md")
 		.ВключитьФайл("LICENSE")
-		.ИсполняемыйФайл("src/cpdb.os", "cpdb");
+		.ИсполняемыйФайл("src/cmd/cpdb.os", "cpdb");
