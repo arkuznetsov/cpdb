@@ -4,7 +4,7 @@
         "Создание": {
             "description": "Создание ИБ",
             "tool": "cpdb",
-            "command": "createib",
+            "command": "infobase create",
             "params": {
                 "-ib-srvr": "Sport1",
                 "-ib-ref": "TST_CPDB",
@@ -18,7 +18,7 @@
         "Сжатие": {
             "description": "Сжатие базы данных",
             "tool": "cpdb",
-            "command": "compress",
+            "command": "database compress",
             "params": {
                 "-sql-srvr": "Sport1",
                 "-sql-user": "_1CSrvUsr1",
