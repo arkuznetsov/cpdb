@@ -61,7 +61,7 @@
 	       .ВОкружении("CPDB_SQL_RESTORE_LOG_PATH");
 	
 	Команда.Опция("r db-recovery", "SIMPLE", "установить модель восстановления (RECOVERY MODEL),
-	                                   |возможные значения ""FULL"", ""SIMPLE"",""BULK_LOGGED""")
+	                                         |возможные значения ""FULL"", ""SIMPLE"",""BULK_LOGGED""")
 	       .ТСтрока()
 	       .ВОкружении("CPDB_SQL_RESTORE_RECOVERY_MODEL");
 	
