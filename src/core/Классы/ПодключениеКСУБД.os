@@ -380,7 +380,7 @@
 	                         |MOVE N'%5' TO N'%6\%1_log.ldf',
 	                         |NOUNLOAD,  REPLACE,  STATS = 10;
 	                         |
-	                         |ALTER DATABASE [" + База + "] SET MULTI_USER""",
+	                         |ALTER DATABASE [%1] SET MULTI_USER""",
 	                         База,
 	                         ПутьКРезервнойКопии,
 	                         ЛогическоеИмяФайлаДанных,
