@@ -1,6 +1,9 @@
 # 1C Database copier (cpdb)
 [![GitHub release](https://img.shields.io/github/release/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
 [![GitHub license](https://img.shields.io/github/license/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/blob/develop/LICENSE.md)
+[![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/cpdb/latest/total?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
+[![GitHub All Releases](https://img.shields.io/github/downloads/ArKuznetsov/cpdb/total?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
+
 [![Build Status](https://travis-ci.org/arkuznetsov/cpdb.svg?branch=develop)](https://travis-ci.org/arkuznetsov/cpdb)
 [![Quality Gate](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=alert_status)](https://open.checkbsl.org/dashboard/index/cpdb)
 [![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=coverage)](https://open.checkbsl.org/dashboard/index/cpdb)
@@ -170,7 +173,6 @@ PRINT N'$(message)'
 | **--createdb** | - Создавать базу данных в случае отсутствия |
 | **--allowschjob** | - Разрешить регламентные задания |
 | **--allowlicdstr** | - Разрешить выдачу лицензий сервером 1С |
-| **--errifexist** | - Сообщить об ошибке если ИБ в кластере 1С существует |
 | **--cadm-user** | - Имя администратора кластера |
 | **--cadm-pwd** | - Пароль администратора кластера |
 | **--nameinlist** | - Имя в списке баз пользователя (если не задано, то ИБ в список не добавляется) |
@@ -222,16 +224,16 @@ cpdb infobase --v8version 8.3.8 restore --ib-path "/FD:/data/MyDatabase" --dt-pa
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--ibconnection** | - Строка подключения к ИБ");
+| **--ib-path** | - Строка подключения к ИБ");
 | **--ib-user** | - Пользователь ИБ");
 | **--ib-pwd** | - Пароль пользователя ИБ");
-| **--extention** | - Имя отключаемого расширения конфигурации |
+| **--extension** | - Имя отключаемого расширения конфигурации |
 | **--uccode** | - Ключ разрешения запуска ИБ");
 
 #### Пример:
 
 ```bat
-cpdb infobase --v8version 8.3.8 uconstorage --ibconnection "/FD:/data/MyDatabase" --ib-user Администратор --ib-pwd 123456 --uccode 1234
+cpdb infobase --v8version 8.3.8 uconstorage --ib-path "/FD:/data/MyDatabase" --ib-user Администратор --ib-pwd 123456 --uccode 1234
 ```
 
 ## constorage - Подключить информационую базу к хранилищу конфигурации
@@ -239,10 +241,10 @@ cpdb infobase --v8version 8.3.8 uconstorage --ibconnection "/FD:/data/MyDatabase
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--ibconnection** | - Строка подключения к ИБ |
+| **--ib-path** | - Строка подключения к ИБ |
 | **--ib-user** | - Пользователь ИБ |
 | **--ib-pwd** | - Пароль пользователя ИБ |
-| **--extention** | - Имя подключаемого расширения конфигурации |
+| **--extension** | - Имя подключаемого расширения конфигурации |
 | **--storage-path** | - Адрес хранилища конфигурации |
 | **--storage-user** | - Пользователь хранилища конфигурации |
 | **--storage-pwd** | - Пароль пользователя хранилища конфигурации |
@@ -252,7 +254,7 @@ cpdb infobase --v8version 8.3.8 uconstorage --ibconnection "/FD:/data/MyDatabase
 #### Пример:
 
 ```bat
-cpdb infobase --v8version 8.3. constorage --ibconnection "/FD:/data/MyDatabase" --ib-user Администратор --ib-pwd 123456 --storage-path "tcp://MyServer/MyRepository" --storage-user MyDatabase_usr1 --storage-pwd 123456 --uccode 12348
+cpdb infobase --v8version 8.3. constorage --ib-path "/FD:/data/MyDatabase" --ib-user Администратор --ib-pwd 123456 --storage-path "tcp://MyServer/MyRepository" --storage-user MyDatabase_usr1 --storage-pwd 123456 --uccode 12348
 ```
 
 ## file - Группа команд работы с файлами
@@ -265,7 +267,6 @@ cpdb infobase --v8version 8.3. constorage --ibconnection "/FD:/data/MyDatabase" 
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
 | **--src** | - Файл источник |
 | **--dst** | - Файл/каталог приемник (если оканчивается на "\", то каталог) |
-| **--replace** | - Перезаписывать существующие файлы |
 | **--move** | - Выполнить перемещение файлов (удалить источник после копирования) |
 | **--lastonly** | - Копирование файлов, измененных не ранее текущей даты |
 
@@ -291,8 +292,6 @@ cpdb file copy --src "d:\MSSQL\Backup\MyDatabase_copy*.bak" --dst "N:\NewDestina
 | **--arch** | - Имя файла архива (не обязательный, по умолчанию <имя исходного файла>.7z) |
 | **--list** | - Имя файла, списка томов архива (не обязательный, по умолчанию <имя исходного файла>.split) |
 | **--vol-size** | - Размер части {\<g>, \<m>, \<b>} (по умолчанию 50m) |
-| **--hash** | - Рассчитывать MD5-хеши файлов частей |
-| **--hash-file** | - Имя файла, списка хэшей томов архива  (не обязательный, по умолчанию <имя исходного файла>.hash) |
 | **--compress-level** | - Уровень сжатия частей архива {0 - 9} (по умолчанию 0 - не сжимать) |
 | **--delsrc** | - Удалить исходный файл после выполнения операции |
 
@@ -310,7 +309,7 @@ cpdb file split "d:\MSSQL\Backup\MyDatabase_copy.bak" --list "d:\MSSQL\Backup\My
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
 | **--arch** | - Имя первого файла архива |
-| **--list** | - Имя файла, списка файлов архива (параметр -file игнорируется) |
+| **--list** | - Имя файла, списка файлов архива (параметр -arch игнорируется) |
 | **--delsrc** | - Удалить исходные файлы после выполнения операции |
 
 #### Пример:
@@ -332,7 +331,6 @@ cpdb file merge --list "d:\MSSQL\Backup\MyDatabase_copy.split" --delsrc
 | **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на Yandex-Диск (параметр -file игнорируется) |
 | **--token** | - Token авторизации |
 | **--path** | - Путь к каталогу на Yandex-Диск, куда помещать загружаемые файлы |
-| **--check-hash** | - (TBE) Проверять соответствие хешей скопированных файлов. Работает только в том случае, когда имеется файл <имяархива>.hash с MD5-хешами частей файлов (формируется командой split) |
 | **--replace** | - Перезаписать файл на Яндекс-диске при загрузке |
 | **--delsrc** | - Удалить исходные файлы после отправки |
 
