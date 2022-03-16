@@ -25,6 +25,7 @@
 - [v8storage](https://github.com/oscript-library/v8storage)
 - [cli](https://github.com/Stepa86/cli)
 - [yadisk](https://github.com/kuntashov/oscript-yadisk)
+- [ParserFileV8i](https://github.com/ret-Phoenix/parserV8i)
 - [7-zip](http://www.7-zip.org/)
 - [MS Command Line Utilities for SQL Server (sqlcmd)](https://www.microsoft.com/en-us/download/details.aspx?id=53591)
 
@@ -45,6 +46,7 @@
 || **create** | - Создать информационную базу на сервере 1С |
 || **dump** | - Выгрузить информационную базу в файл |
 || **restore** | - Загрузить информационную базу из файла |
+|| **clearcache** | - Очистить локальный кэш информационных баз 1С |
 || **uconstorage** | - Отключить информационную базу от хранилища конфигураций |
 || **constorage** | - Подключить информационную базу к хранилищу конфигураций |
 |**file** | Группа команд работы с файлами||
@@ -246,6 +248,19 @@ cpdb infobase --v8version 8.3.8 dump --ib-path "/FD:/data/MyDatabase" --dt-path 
 
 ```bat
 cpdb infobase --v8version 8.3.8 restore --ib-path "/FD:/data/MyDatabase" --dt-path "d:\data\1Cv8.dt" --ib-user Администратор --ib-pwd 123456 --uccode 1234 -delsrc
+```
+
+## clearcache - Очистить локальный кэш информационных баз 1С
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--ib-path** | - Строка подключения к ИБ (если не указан то удаляются локальные кэши всех информационных баз)|
+
+#### Пример:
+
+```bat
+cpdb infobase clearcache --ib-path "/FD:/data/MyDatabase"
 ```
 
 ## uconstorage - Отключить информационную базу от хранилища конфигурации
