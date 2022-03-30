@@ -57,9 +57,6 @@ jobs:
         id: extract_version
 
       - name: Установка Sonar-scanner
-        env:
-          PACKAGEDEF_DATA: ${{ steps.packagedef_data.outputs.data }}
-          CPDB_VERSION: ${{ steps.extract_version.outputs.group1 }}
         uses: warchant/setup-sonar-scanner@v1
 
       # Анализ проекта в SonarQube (ветка)
