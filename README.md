@@ -1,13 +1,15 @@
 # 1C Database copier (cpdb)
+
 [![GitHub release](https://img.shields.io/github/release/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
-[![GitHub license](https://img.shields.io/github/license/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/blob/develop/LICENSE.md)
+[![GitHub license](https://img.shields.io/github/license/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/blob/develop/LICENSE)
 [![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/cpdb/latest/total?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
 [![GitHub All Releases](https://img.shields.io/github/downloads/ArKuznetsov/cpdb/total?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
 
-[![Build Status](https://travis-ci.org/arkuznetsov/cpdb.svg?branch=develop)](https://travis-ci.org/arkuznetsov/cpdb)
+[![Build Status](https://img.shields.io/github/workflow/status/ArKuznetsov/cpdb/%D0%9A%D0%BE%D0%BD%D1%82%D1%80%D0%BE%D0%BB%D1%8C%20%D0%BA%D0%B0%D1%87%D0%B5%D1%81%D1%82%D0%B2%D0%B0)](https://github.com/arkuznetsov/cpdb/actions/)
 [![Quality Gate](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=alert_status)](https://open.checkbsl.org/dashboard/index/cpdb)
 [![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=coverage)](https://open.checkbsl.org/dashboard/index/cpdb)
 [![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/cpdb)
+
 
 Набор скриптов oscript для копирования баз данных 1C / MS SQL и развертывания на целевой системе.
 Типичный сценарий работы:
