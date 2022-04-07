@@ -36,6 +36,14 @@ jobs:
           opm install opm
           opm install --dev
 
+      # Запуск контейнера NextCloud
+      - name: Запуск контейнера NextCloud
+        env:
+          NC_ADDRESS: ${{ secrets.NC_ADDRESS }}
+          NC_ADMIN_NAME: ${{ secrets.NC_ADMIN_NAME }}
+          NC_ADMIN_PWD: ${{ secrets.NC_ADMIN_PWD }}
+        run: ./tools/nextcloud/startenv.bat
+
       # Запуск тестов и сбор покрытия кода
       - name: Покрытие кода
         env:
@@ -46,6 +54,10 @@ jobs:
           NC_ADMIN_NAME: ${{ secrets.NC_ADMIN_NAME }}
           NC_ADMIN_PWD: ${{ secrets.NC_ADMIN_PWD }}
         run: oscript ./tasks/coverage.os
+
+      # Удаление контейнера NextCloud
+      - name: Удаление контейнера NextCloud
+        run: ./tools/nextcloud/stopenv.bat
 
       - name: Получение packagedef
         shell: pwsh
