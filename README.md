@@ -58,6 +58,8 @@
 || **merge** | - Разархивировать файл (используется 7-Zip) |
 || **putyadisk** | - Помещение файла на Yandex-Диск |
 || **getyadisk** | - Получение файла из Yandex-Диска |
+|| **putnc** | - Помещение файла в сервис NextCloud |
+|| **getnc** | - Получение файла из сервиса NextCloud |
 || **mapdrive** | - Подключить сетевой диск |
 || **umapdrive** | - Отключить сетевой диск |
 | **batch** | - Последовательное выполнение команд по сценариям, заданным в файлах (json) |
@@ -391,19 +393,21 @@ cpdb file merge --list "d:\MSSQL\Backup\MyDatabase_copy.split" --delsrc
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
 | **--file** | - Путь к локальному файлу для помещения на Yandex-Диск |
-| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на Yandex-Диск (параметр -file игнорируется) |
+| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на Yandex-Диск (параметр --file игнорируется) |
 | **--token** | - Token авторизации |
 | **--path** | - Путь к каталогу на Yandex-Диск, куда помещать загружаемые файлы |
-| **--replace** | - Перезаписать файл на Яндекс-диске при загрузке |
+| **--replace** | - Перезаписать файл на Yandex-диске при загрузке |
 | **--delsrc** | - Удалить исходные файлы после отправки |
 
 #### Пример:
 
 ```bat
+// Помещает файл "MyDatabase_copy.bak" на Yandex-диск
 cpdb file putyadisk --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
 ```
 
 ```bat
+// Помещает файлы, указанные в списке "MyDatabase_copy.split" на Yandex-диск
 cpdb file putyadisk --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
 ```
 
@@ -414,20 +418,22 @@ cpdb file putyadisk --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXX
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов|
+| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
 | **--token** | - Token авторизации |
 | **--file** | - Путь к файлу на Yandex-Диск для загрузки |
-| **--list** | - Путь к файлу на Yandex-Диск со списком файлов, которые будут загружены (параметр -ya-file игнорируется) |
+| **--list** | - Путь к файлу на Yandex-Диск со списком файлов, которые будут загружены (параметр --file игнорируется) |
 | **--delsrc** | - Удалить файлы из Yandex-Диск после получения |
 
 #### Пример:
 
 ```bat
+// Получает файл "MyDatabase_copy.bak" из Yandex-диска
 cpdb file getyadisk --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
 ```
 
 ```bat
-cpdb file getyadisk --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
+// Получает файлы, указанные в списке "MyDatabase_copy.split" из Yandex-диска
+cpdb file getyadisk --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
 ```
 
 ##### Для получения токена авторизации Яндекс-диска:
@@ -444,6 +450,59 @@ cpdb file getyadisk --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXX
 * Нажать "Создать приложение" внизу формы: после этого будет показан ID пароль, прочие параметры созданного приложения
 * Получить токен для приложения: перейти по ссылке https://oauth.yandex.ru/authorize?response_type=token&client_id=<ВАШ ID (ID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)>
 * На вопрос "Приложение OScript.YaDisk запрашивает доступ к вашим данным на Яндексе" ответить "Разрешить": после этого на экране появится сформированный токен
+
+## putnc - Помещение файла в сервис NextCloud
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--service** | - Адрес сервиса NextCloud |
+| **--user** | - Имя пользователя сервиса NextCloud |
+| **--pwd** | - Пароль пользователя сервиса NextCloud |
+| **--file** | - Путь к локальному файлу для помещения в сервис NextCloud |
+| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены в сервис NextCloud (параметр --file игнорируется) |
+| **--path** | - Путь к каталогу в сервисе NextCloud, куда помещать загружаемые файлы |
+| **--replace** | - Перезаписать файл в сервисе NextCloud при загрузке |
+| **--delsrc** | - Удалить исходные файлы после отправки |
+
+#### Пример:
+
+```bat
+// Помещает файл "MyDatabase_copy.bak" в сервис NextCloud
+cpdb file putnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
+```
+
+```bat
+// Помещает файлы, указанные в списке "MyDatabase_copy.split" в сервис NextCloud
+cpdb file putnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
+```
+
+## getnc - Получение файла из сервиса NextCloud
+
+### Параметры:
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--service** | - Адрес сервиса NextCloud |
+| **--user** | - Имя пользователя сервиса NextCloud |
+| **--pwd** | - Пароль пользователя сервиса NextCloud |
+| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
+| **--file** | - Путь к файлу в сервисе NextCloud для загрузки |
+| **--list** | - Путь к файлу в сервисе NextCloud со списком файлов, которые будут загружены (параметр --file игнорируется) |
+| **--delsrc** | - Удалить файлы из сервиса NextCloud после получения |
+
+#### Пример:
+
+```bat
+// Получает файл "MyDatabase_copy.bak" из сервиса NextCloud
+cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
+```
+
+```bat
+// Получает файлы, указанные в списке "MyDatabase_copy.split" из сервиса NextCloud
+cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
+```
 
 ## mapdrive - Подключить сетевой диск
 
