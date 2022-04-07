@@ -42,6 +42,9 @@ jobs:
           CPDB_SQL_SERVER: ${{ secrets.CPDB_SQL_SERVER }}
           CPDB_SQL_USER: ${{ secrets.CPDB_SQL_USER }}
           CPDB_SQL_PWD: ${{ secrets.CPDB_SQL_PWD }}
+          NC_ADDRESS: ${{ secrets.NC_ADDRESS }}
+          NC_ADMIN_NAME: ${{ secrets.NC_ADMIN_NAME }}
+          NC_ADMIN_PWD: ${{ secrets.NC_ADMIN_PWD }}
         run: oscript ./tasks/coverage.os
 
       - name: Получение packagedef
