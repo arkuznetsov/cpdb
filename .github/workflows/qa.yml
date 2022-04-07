@@ -47,7 +47,7 @@ jobs:
       # Запуск тестов и сбор покрытия кода
       - name: Покрытие кода
         env:
-          CPDB_SQL_SERVER: ${{ secrets.CPDB_SQL_SERVER }}
+          CPDB_SQL_SRVR: ${{ secrets.CPDB_SQL_SRVR }}
           CPDB_SQL_USER: ${{ secrets.CPDB_SQL_USER }}
           CPDB_SQL_PWD: ${{ secrets.CPDB_SQL_PWD }}
           NC_ADDRESS: ${{ secrets.NC_ADDRESS }}
