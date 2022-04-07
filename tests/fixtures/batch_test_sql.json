@@ -1,0 +1,35 @@
+{
+    "params": {
+        "sql-db": "cpdb_test_db_batch"
+    },
+    "stages": {
+        "Создание": {
+            "description": "Создание БД",
+            "command": "database create",
+            "params": {
+                "db-recovery": "FULL"
+            }
+        },
+        "Восстановление": {
+            "description": "Восстановление из копии",
+            "command": "database restore",
+            "params": {
+                "bak-path": "./tests/fixtures/cpdb_test_db.bak",
+                "db-owner" : "_1CSrvUsr1"
+            }
+        },
+        "Сжатие": {
+            "description": "Сжатие базы",
+            "command": "database compress",
+            "params": {
+                "shrink-db": true,
+                "shrink-log": true
+            }
+        },
+        "Удаление": {
+            "description": "Удаление базы",
+            "command": "database drop",
+            "params": {}
+        }
+    }
+}
