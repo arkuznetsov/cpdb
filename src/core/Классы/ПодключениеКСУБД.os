@@ -515,17 +515,6 @@
 	                         ЛогическоеИмяФайлаЖурнала,
 	                         ПутьКФайлуЖурнала);
 	
-	ТекстЗапроса = СтрШаблон("""USE [master];
-	                         |
-	                         |ALTER DATABASE [%1] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
-	                         |
-	                         |RESTORE DATABASE [%1] FROM  DISK = N'%2' WITH  FILE = 1,
-	                         |NOUNLOAD,  REPLACE,  STATS = 10;
-	                         |
-	                         |ALTER DATABASE [%1] SET MULTI_USER""",
-	                         База,
-	                         ПутьКРезервнойКопии);
-	
 	КодВозврата = ВыполнитьЗапросСУБД(ТекстЗапроса, ОписаниеРезультата);
 
 	Возврат КодВозврата = 0;
