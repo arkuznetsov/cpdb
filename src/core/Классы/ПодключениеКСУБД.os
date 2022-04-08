@@ -515,6 +515,17 @@
 	                         ЛогическоеИмяФайлаЖурнала,
 	                         ПутьКФайлуЖурнала);
 	
+	ТекстЗапроса = СтрШаблон("""USE [master];
+	                         |
+	                         |ALTER DATABASE [%1] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
+	                         |
+	                         |RESTORE DATABASE [%1] FROM  DISK = N'%2' WITH  FILE = 1,
+	                         |NOUNLOAD,  REPLACE,  STATS = 10;
+	                         |
+	                         |ALTER DATABASE [%1] SET MULTI_USER""",
+	                         База,
+	                         ПутьКРезервнойКопии);
+	
 	КодВозврата = ВыполнитьЗапросСУБД(ТекстЗапроса, ОписаниеРезультата);
 
 	Возврат КодВозврата = 0;
@@ -776,11 +787,12 @@
 	ТекстЗапроса = """SET NOCOUNT ON;
 	               |
 	               |SELECT
-	               |	SERVERPROPERTY('MachineName') AS ComputerName,
-	               |	SERVERPROPERTY('ServerName') AS InstanceName,
-	               |	SERVERPROPERTY('Edition') AS Edition,
-	               |	SERVERPROPERTY('ProductVersion') AS ProductVersion,
-	               |	SERVERPROPERTY('ProductLevel') AS ProductLevel""";
+	               |  SERVERPROPERTY('MachineName') AS ComputerName,
+	               |  SERVERPROPERTY('ServerName') AS InstanceName,
+	               |  SERVERPROPERTY('Edition') AS Edition,
+	               |  SERVERPROPERTY('ProductVersion') AS ProductVersion,
+	               |  SERVERPROPERTY('ProductLevel') AS ProductLevel,
+				   |  @@VERSION AS FullVersion""";
 
 	ОписаниеРезультата = "";
 	КодВозврата = ВыполнитьЗапросСУБД(ТекстЗапроса, ОписаниеРезультата, "|", Истина);
@@ -791,6 +803,7 @@
 	Редакция             = 2;
 	Версия               = 3;
 	Уровень              = 4;
+	Представление        = 5;
 	
 	// 2000 - 2000 (8)), 2005 - 9, 2008 - 10, 2012 - 11, 2014 - 12, 2016 - 13, 2017 - 14, 2019 - 15
 	МассивВерсий = СтрРазделить("2000-8,9,10,11,12,13,14,15", ",");
@@ -820,6 +833,7 @@
 		СтруктураРезультата.Вставить("Редакция"         , МассивЗначений[Редакция]);
 		СтруктураРезультата.Вставить("Версия"           , МассивЗначений[Версия]);
 		СтруктураРезультата.Вставить("Уровень"          , МассивЗначений[Уровень]);
+		СтруктураРезультата.Вставить("Представление"    , МассивЗначений[Представление]);
 		
 		МассивВерсии = СтрРазделить(СтруктураРезультата["Версия"], ".");
 		СтруктураРезультата.Вставить("ВерсияМакс"       , СоответствиеВерсий[МассивВерсии[0]]);
