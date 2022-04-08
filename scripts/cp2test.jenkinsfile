@@ -19,7 +19,7 @@ pipeline {
 			agent { label "${env.src_agent_label}"}
             steps {
 				timestamps {
-					cmd("cpdb backup -sql-srvr ${env.src_server_name} -sql-db ${env.src_db_name} -sql-user ${src_db_cred_Usr} -sql-pwd ${src_db_cred_Psw} -bak-path \"${env.src_bak_path}\\${env.bak_file_name}\"")
+					cmd("cpdb database --sql-srvr ${env.src_server_name} --sql-user ${src_db_cred_Usr} --sql-pwd ${src_db_cred_Psw} backup --sql-db ${env.src_db_name} --bak-path \"${env.src_bak_path}\\${env.bak_file_name}\"")
 				}
             }
         }
@@ -28,7 +28,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb split -src \"${env.src_bak_path}\\${env.bak_file_name}\" -list \"${env.src_bak_path}\\${env.list_file_name}\" -vol 50m -hash -delsrc");
+                    cmd("cpdb file split --src \"${env.src_bak_path}\\${env.bak_file_name}\" --list \"${env.src_bak_path}\\${env.list_file_name}\" --vol 50m --hash --delsrc");
                 }
             }
         }
@@ -36,7 +36,7 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb putyadisk -list \"${env.src_bak_path}\\${env.list_file_name}\" -ya-token ${env.storage_token} -ya-path \"${env.storage_path}\" -delsrc");
+                    cmd("cpdb file putyadisk --list \"${env.src_bak_path}\\${env.list_file_name}\" --ya-token ${env.storage_token} --ya-path \"${env.storage_path}\" --delsrc");
                 }
             }
         }
@@ -44,7 +44,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb getyadisk -path \"${env.dst_bak_path}\" -ya-token ${env.storage_token} -ya-list \"${env.storage_path}/${env.list_file_name}\" -delsrc");
+					cmd("cpdb file getyadisk --path \"${env.dst_bak_path}\" --ya-token ${env.storage_token} --ya-list \"${env.storage_path}/${env.list_file_name}\" --delsrc");
                 }
             }
         }
@@ -53,7 +53,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb merge -list \"${env.dst_bak_path}\\${env.list_file_name}\" -delsrc");
+					cmd("cpdb file merge --list \"${env.dst_bak_path}\\${env.list_file_name}\" --delsrc");
                  }
             }
         }
@@ -62,7 +62,7 @@ pipeline {
 			agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb restore -sql-srvr ${env.dst_server_name} -sql-db ${env.dst_db_name} -sql-user ${dst_db_cred_Usr} -sql-pwd ${dst_db_cred_Psw} -bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" -create-db -shrink-db -db-owner ${env.dst_dbo} -db-path \"${env.dst_db_path}\" -db-logpath \"${env.dst_log_path}\" -db-recovery SIMPLE -db-changelfn");
+					cmd("cpdb database --sql-srvr ${env.dst_server_name} --sql-user ${dst_db_cred_Usr} --sql-pwd ${dst_db_cred_Psw} restore --sql-db ${env.dst_db_name} --bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" --create-db --shrink-db --db-owner ${env.dst_dbo} --db-path \"${env.dst_db_path}\" --db-logpath \"${env.dst_log_path}\" --db-recovery SIMPLE --db-changelfn");
                  }
             }
         }
@@ -71,8 +71,8 @@ pipeline {
 			agent { label "${dst_ib_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb uconstorage -ib-path ${dst_ib_con_string} -ib-user \"${dst_ib_cred_Usr}\" -ib-pwd \"${dst_ib_cred_Psw}\"");
-					cmd("cpdb constorage -ib-path ${dst_ib_con_string} -storage-path ${dst_ib_storage_adr} -ib-user \"${dst_ib_cred_Usr}\" -ib-pwd \"${dst_ib_cred_Psw}\" -storage-user \"${dst_ib_storage_cred_Usr}\" -storage-pwd \"${dst_ib_storage_cred_Psw}\"");
+					cmd("cpdb infobase uconstorage --ib-path ${dst_ib_con_string} --ib-user \"${dst_ib_cred_Usr}\" --ib-pwd \"${dst_ib_cred_Psw}\"");
+					cmd("cpdb infobase constorage --ib-path ${dst_ib_con_string} --storage-path ${dst_ib_storage_adr} --ib-user \"${dst_ib_cred_Usr}\" --ib-pwd \"${dst_ib_cred_Psw}\" --storage-user \"${dst_ib_storage_cred_Usr}\" --storage-pwd \"${dst_ib_storage_cred_Psw}\"");
                  }
             }
         }

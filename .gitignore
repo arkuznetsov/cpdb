@@ -1,7 +1,5 @@
 .vscode/*.*
 sonarlint.json
-
 \.sonar/
-test-reports/
-coverage/
+build/
 *.ospx
