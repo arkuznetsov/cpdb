@@ -27,6 +27,7 @@
 - [v8storage](https://github.com/oscript-library/v8storage)
 - [cli](https://github.com/Stepa86/cli)
 - [yadisk](https://github.com/kuntashov/oscript-yadisk)
+- [nextcloud-lib](https://github.com/arkuznetsov/nextcloud-lib)
 - [ParserFileV8i](https://github.com/ret-Phoenix/parserV8i)
 - [7-zip](http://www.7-zip.org/)
 - [MS Command Line Utilities for SQL Server (sqlcmd)](https://www.microsoft.com/en-us/download/details.aspx?id=53591)
@@ -555,7 +556,6 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
     "stages": {
         "Восстановление": {
             "description": "Восстановление из резервной копии",
-            "tool": "cpdb",
             "command": "database restore",
             "params": {
                 "sql-srvr": "MySQLServer",
@@ -572,7 +572,6 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
         },
         "Отключение": {
             "description": "Отключение от хранилища",
-            "tool": "cpdb",
             "command": "infobase uconstorage",
             "params": {
                 "ib-path": "/SSport1\\TST_DB_MyDomain",
@@ -582,7 +581,6 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
         },
         "Сжатие": {
             "description": "Сжатие базы данных",
-            "tool": "cpdb",
             "command": "database compress",
             "params": {
                 "sql-srvr": "Sport1",
