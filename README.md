@@ -61,6 +61,8 @@
 || **getyadisk** | - Получение файла из Yandex-Диска |
 || **putnc** | - Помещение файла в сервис NextCloud |
 || **getnc** | - Получение файла из сервиса NextCloud |
+|| **putsftp** | - Помещение файла на сервер SFTP |
+|| **getsftp** | - Получение файла с сервера SFTP |
 || **mapdrive** | - Подключить сетевой диск |
 || **umapdrive** | - Отключить сетевой диск |
 | **batch** | - Последовательное выполнение команд по сценариям, заданным в файлах (json) |
@@ -497,12 +499,67 @@ cpdb file putnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" -
 
 ```bat
 // Получает файл "MyDatabase_copy.bak" из сервиса NextCloud
-cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
+cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --file "/transfer/MyDatabase_copy.bak" --delsrc
 ```
 
 ```bat
 // Получает файлы, указанные в списке "MyDatabase_copy.split" из сервиса NextCloud
-cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
+cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\" --list "/transfer/MyDatabase_copy.split" -delsrc
+```
+
+## putsftp - Помещение файла на сервер SFTP
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--server** | - Адрес сервера SFTP |
+| **--port** | - Порт сервера SFTP |
+| **--user** | - Имя пользователя сервера SFTP |
+| **--pwd** | - Пароль пользователя сервера SFTP |
+| **--file** | - Путь к локальному файлу для помещения на сервер SFTP |
+| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на сервер SFTP (параметр --file игнорируется) |
+| **--path** | - Путь к каталогу на сервере SFTP, куда помещать загружаемые файлы |
+| **--replace** | - Перезаписать файл на сервере SFTP при загрузке |
+| **--delsrc** | - Удалить исходные файлы после отправки |
+
+#### Пример:
+
+```bat
+// Помещает файл "MyDatabase_copy.bak" на сервере SFTP
+cpdb file putsftp --server "sftp.myServer.org" --port 22 --user "admin" --pwd "P@$$w0rd" --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --path "/transfer" --delsrc
+```
+
+```bat
+// Помещает файлы, указанные в списке "MyDatabase_copy.split" на сервере SFTP
+cpdb file putsftp --server "sftp.myServer.org" --port 22 --user "admin" --pwd "P@$$w0rd" --list "d:\MSSQL\Backup\MyDatabase_copy.split" --path "/transfer" --delsrc
+```
+
+## getsftp - Получение файла с сервера SFTP
+
+### Параметры:
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--server** | - Адрес сервера SFTP |
+| **--port** | - Порт сервера SFTP |
+| **--user** | - Имя пользователя сервера SFTP |
+| **--pwd** | - Пароль пользователя сервера SFTP |
+| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
+| **--file** | - Путь к файлу на сервере SFTP для загрузки |
+| **--list** | - Путь к файлу на сервере SFTP со списком файлов, которые будут загружены (параметр --file игнорируется) |
+| **--delsrc** | - Удалить файлы с сервера SFTP после получения |
+
+#### Пример:
+
+```bat
+// Получает файл "MyDatabase_copy.bak" с сервера SFTP
+cpdb file getnc --server "sftp.myServer.org" --port 22 --user "user" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --file "/transfer/MyDatabase_copy.bak" --delsrc
+```
+
+```bat
+// Получает файлы, указанные в списке "MyDatabase_copy.split" с сервера SFTP
+cpdb file getsftp --server "sftp.myServer.org" --port 22 --user "user" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\" --list "/transfer/MyDatabase_copy.split" -delsrc
 ```
 
 ## mapdrive - Подключить сетевой диск
