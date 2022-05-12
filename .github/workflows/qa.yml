@@ -43,7 +43,10 @@ jobs:
           NC_TEST_ADDRESS: ${{ secrets.NC_TEST_ADDRESS }}
           NC_TEST_ADMIN_NAME: ${{ secrets.NC_TEST_ADMIN_NAME }}
           NC_TEST_ADMIN_PWD: ${{ secrets.NC_TEST_ADMIN_PWD }}
-        run: ./tools/nextcloud/startenv.bat
+          SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
+          SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
+          SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
+        run: ./tools/startenv.bat
 
       # Запуск тестов и сбор покрытия кода
       - name: Покрытие кода
@@ -54,11 +57,14 @@ jobs:
           NC_TEST_ADDRESS: ${{ secrets.NC_TEST_ADDRESS }}
           NC_TEST_ADMIN_NAME: ${{ secrets.NC_TEST_ADMIN_NAME }}
           NC_TEST_ADMIN_PWD: ${{ secrets.NC_TEST_ADMIN_PWD }}
+          SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
+          SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
+          SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
         run: oscript ./tasks/coverage.os
 
       # Удаление контейнера NextCloud
       - name: Удаление контейнера NextCloud
-        run: ./tools/nextcloud/stopenv.bat
+        run: ./tools/stopenv.bat
 
       - name: Получение packagedef
         shell: pwsh
