@@ -11,6 +11,8 @@ services:
         NEXTCLOUD_ADMIN_PASSWORD: ${NC_TEST_ADMIN_PWD}
     ports:
         - "8080:80"
+    networks:
+        - cpdb_test_network
 
  sftp:
     image: onescript-ssh/test-ssh
@@ -22,3 +24,8 @@ services:
     container_name: test_ssh
     ports:
         - "2222:22"
+    networks:
+        - cpdb_test_network
+
+networks:
+    cpdb_test_network:

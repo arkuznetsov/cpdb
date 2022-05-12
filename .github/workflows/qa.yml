@@ -38,7 +38,7 @@ jobs:
           opm install --dev
 
       # Запуск контейнеров NextCloud и OpenSSH
-      - name: Запуск контейнера NextCloud
+      - name: Запуск контейнеров NextCloud и OpenSSH
         env:
           NC_TEST_ADDRESS: ${{ secrets.NC_TEST_ADDRESS }}
           NC_TEST_ADMIN_NAME: ${{ secrets.NC_TEST_ADMIN_NAME }}
@@ -64,8 +64,8 @@ jobs:
           SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
         run: oscript ./tasks/coverage.os
 
-      # Удаление контейнера NextCloud
-      - name: Удаление контейнера NextCloud
+      # Остановка и удаление контейнеров NextCloud и OpenSSH
+      - name: Остановка и удаление контейнеров NextCloud и OpenSSH
         run: docker-compose --file ./tools/docker-compose.yml down
 
       - name: Получение packagedef
