@@ -6,21 +6,21 @@ def configVer
 
 pipeline {
     agent none
-	
+
     environment {
-		src_db_cred = credentials("${env.src_db_cred}")
-		dst_db_cred = credentials("${env.dst_db_cred}")
-		dst_ib_cred = credentials("${env.dst_ib_cred}")
-		dst_ib_storage_cred = credentials("${env.dst_ib_storage_cred}")
+        src_db_cred = credentials("${env.src_db_cred}")
+        dst_db_cred = credentials("${env.dst_db_cred}")
+        dst_ib_cred = credentials("${env.dst_ib_cred}")
+        dst_ib_storage_cred = credentials("${env.dst_ib_storage_cred}")
     }
 
     stages {
         stage('Резервное копирование базы') {
-			agent { label "${env.src_agent_label}"}
+            agent { label "${env.src_agent_label}"}
             steps {
-				timestamps {
-					cmd("cpdb database --sql-srvr ${env.src_server_name} --sql-user ${src_db_cred_Usr} --sql-pwd ${src_db_cred_Psw} backup --sql-db ${env.src_db_name} --bak-path \"${env.src_bak_path}\\${env.bak_file_name}\"")
-				}
+                timestamps {
+                    cmd("cpdb database --srvr ${env.src_server_name} --user ${src_db_cred_Usr} --pwd ${src_db_cred_Psw} backup --db ${env.src_db_name} --bak-path \"${env.src_bak_path}\\${env.bak_file_name}\"")
+                }
             }
         }
 
@@ -36,43 +36,43 @@ pipeline {
             agent { label "${env.src_agent_label}"}
             steps {
                 timestamps {
-                    cmd("cpdb file putyadisk --list \"${env.src_bak_path}\\${env.list_file_name}\" --ya-token ${env.storage_token} --ya-path \"${env.storage_path}\" --delsrc");
+                    cmd("cpdb yadisk --token ${env.storage_token} put --list \"${env.src_bak_path}\\${env.list_file_name}\" --path \"${env.storage_path}\" --delsrc");
                 }
             }
         }
         stage('Получение копии из хранилища') {
-			agent { label "${env.dst_agent_label}"}
+            agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb file getyadisk --path \"${env.dst_bak_path}\" --ya-token ${env.storage_token} --ya-list \"${env.storage_path}/${env.list_file_name}\" --delsrc");
+                    cmd("cpdb yadisk --token ${env.storage_token} get --path \"${env.dst_bak_path}\" --list \"${env.storage_path}/${env.list_file_name}\" --delsrc");
                 }
             }
         }
 
         stage('Сборка частей') {
-			agent { label "${env.dst_agent_label}"}
+            agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb file merge --list \"${env.dst_bak_path}\\${env.list_file_name}\" --delsrc");
+                    cmd("cpdb file merge --list \"${env.dst_bak_path}\\${env.list_file_name}\" --delsrc");
                  }
             }
         }
 
         stage('Восстановление базы из резервной копии') {
-			agent { label "${env.dst_agent_label}"}
+            agent { label "${env.dst_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb database --sql-srvr ${env.dst_server_name} --sql-user ${dst_db_cred_Usr} --sql-pwd ${dst_db_cred_Psw} restore --sql-db ${env.dst_db_name} --bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" --create-db --shrink-db --db-owner ${env.dst_dbo} --db-path \"${env.dst_db_path}\" --db-logpath \"${env.dst_log_path}\" --db-recovery SIMPLE --db-changelfn");
+                    cmd("cpdb database --srvr ${env.dst_server_name} --user ${dst_db_cred_Usr} --pwd ${dst_db_cred_Psw} restore --db ${env.dst_db_name} --bak-path \"${env.dst_bak_path}\\${env.bak_file_name}\" --create-db --shrink-db --db-owner ${env.dst_dbo} --db-path \"${env.dst_db_path}\" --db-logpath \"${env.dst_log_path}\" --db-recovery SIMPLE --db-changelfn");
                  }
             }
         }
 
         stage('Подключение базу к хранилищу конфигурации') {
-			agent { label "${dst_ib_agent_label}"}
+            agent { label "${dst_ib_agent_label}"}
             steps {
                 timestamps {
-					cmd("cpdb infobase uconstorage --ib-path ${dst_ib_con_string} --ib-user \"${dst_ib_cred_Usr}\" --ib-pwd \"${dst_ib_cred_Psw}\"");
-					cmd("cpdb infobase constorage --ib-path ${dst_ib_con_string} --storage-path ${dst_ib_storage_adr} --ib-user \"${dst_ib_cred_Usr}\" --ib-pwd \"${dst_ib_cred_Psw}\" --storage-user \"${dst_ib_storage_cred_Usr}\" --storage-pwd \"${dst_ib_storage_cred_Psw}\"");
+                    cmd("cpdb infobase uconstorage --ib-path ${dst_ib_con_string} --ib-user \"${dst_ib_cred_Usr}\" --ib-pwd \"${dst_ib_cred_Psw}\"");
+                    cmd("cpdb infobase constorage --ib-path ${dst_ib_con_string} --storage-path ${dst_ib_storage_adr} --ib-user \"${dst_ib_cred_Usr}\" --ib-pwd \"${dst_ib_cred_Psw}\" --storage-user \"${dst_ib_storage_cred_Usr}\" --storage-pwd \"${dst_ib_storage_cred_Psw}\"");
                  }
             }
         }
