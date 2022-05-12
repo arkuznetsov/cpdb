@@ -37,7 +37,7 @@ jobs:
           opm install opm
           opm install --dev
 
-      # Запуск контейнера NextCloud
+      # Запуск контейнеров NextCloud и OpenSSH
       - name: Запуск контейнера NextCloud
         env:
           NC_TEST_ADDRESS: ${{ secrets.NC_TEST_ADDRESS }}
@@ -46,7 +46,9 @@ jobs:
           SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
           SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
           SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
-        run: ./tools/startenv.bat
+        run: |
+          docker-compose --file ./tools/docker-compose.yml up -d
+          oscript ./tools/nextcloud/checkenv.os
 
       # Запуск тестов и сбор покрытия кода
       - name: Покрытие кода
@@ -64,7 +66,7 @@ jobs:
 
       # Удаление контейнера NextCloud
       - name: Удаление контейнера NextCloud
-        run: ./tools/stopenv.bat
+        run: docker-compose --file ./tools/docker-compose.yml down
 
       - name: Получение packagedef
         shell: pwsh
