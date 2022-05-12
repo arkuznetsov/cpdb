@@ -17,8 +17,8 @@ services:
     build:
         context: "./openssh"
         args:
-            SSH_TEST_USER: ${SFTP_TEST_USER}
-            SSH_TEST_PWD: ${SFTP_TEST_PWD}
+            SFTP_TEST_USER: ${SFTP_TEST_USER}
+            SFTP_TEST_PWD: ${SFTP_TEST_PWD}
     container_name: test_ssh
     ports:
         - "2222:22"
