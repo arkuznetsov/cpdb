@@ -1,0 +1,20 @@
+Protocol 2
+UseDNS no
+
+HostKey /etc/ssh/id_key
+
+# Limited access
+PubkeyAuthentication yes
+PermitRootLogin no
+X11Forwarding no
+AllowTcpForwarding yes
+#PermitRootLogin without-password
+
+Subsystem	sftp	/usr/lib/openssh/sftp-server
+# Force sftp and chroot jail
+#Subsystem sftp internal-sftp
+#ForceCommand internal-sftp
+#ChrootDirectory /upload/
+
+# Enable this for more logs
+LogLevel VERBOSE
