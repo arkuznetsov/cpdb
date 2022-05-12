@@ -47,7 +47,7 @@ jobs:
           SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
           SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
         run: |
-          docker-compose --file ./tools/docker-compose.yml up -d
+          docker-compose --file ./tools/docker-compose.yml up --build -d
           oscript ./tools/nextcloud/checkenv.os
 
       # Запуск тестов и сбор покрытия кода

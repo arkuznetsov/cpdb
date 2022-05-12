@@ -1,12 +1,12 @@
 #!/bin/bash
 
 # Create user if needed
-getent passwd ${SSH_TEST_USER} > /dev/null
+getent passwd ${SFTP_TEST_USER} > /dev/null
 if [ $? != 0 ]; then
-    useradd -m -s /bin/bash ${SSH_TEST_USER}
-    passwd ${SSH_TEST_USER} <<EOF
-${SSH_TEST_PWD}
-${SSH_TEST_PWD}
+    useradd -m -s /bin/bash ${SFTP_TEST_USER}
+    passwd ${SFTP_TEST_USER} <<EOF
+${SFTP_TEST_PWD}
+${SFTP_TEST_PWD}
 EOF
 fi
 
@@ -18,7 +18,7 @@ fi
 # Restrict access from other users
 chmod 600 /etc/ssh/id_key
 
-mkdir -p /home/${SSH_TEST_USER}/.ssh
-cat /tmp/sftp-key.pub >> /home/${SSH_TEST_USER}/.ssh/authorized_keys
-chmod -R 700 /home/${SSH_TEST_USER}/.ssh && chmod -R 600 /home/${SSH_TEST_USER}/.ssh/*
-chown -R ${SSH_TEST_USER} /home/${SSH_TEST_USER}/.ssh
+mkdir -p /home/${SFTP_TEST_USER}/.ssh
+cat /tmp/sftp-key.pub >> /home/${SFTP_TEST_USER}/.ssh/authorized_keys
+chmod -R 700 /home/${SFTP_TEST_USER}/.ssh && chmod -R 600 /home/${SFTP_TEST_USER}/.ssh/*
+chown -R ${SFTP_TEST_USER} /home/${SFTP_TEST_USER}/.ssh
