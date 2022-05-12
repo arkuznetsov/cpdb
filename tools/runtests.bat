@@ -6,7 +6,7 @@ FOR /f "usebackq tokens=*" %%a in ("%~dp0.env") DO (
   )
 )
 
-@docker-compose --file %~dp0docker-compose.yml up -d
+@docker-compose --file %~dp0docker-compose.yml up --build -d
 @oscript %~dp0nextcloud\checkenv.os
 IF %ERRORLEVEL% NEQ 0 GOTO END
 
