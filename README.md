@@ -28,6 +28,7 @@
 - [cli](https://github.com/Stepa86/cli)
 - [yadisk](https://github.com/kuntashov/oscript-yadisk)
 - [nextcloud-lib](https://github.com/arkuznetsov/nextcloud-lib)
+- [ClientSSH](https://github.com/arkuznetsov/oscript-ssh)
 - [ParserFileV8i](https://github.com/ret-Phoenix/parserV8i)
 - [7-zip](http://www.7-zip.org/)
 - [MS Command Line Utilities for SQL Server (sqlcmd)](https://www.microsoft.com/en-us/download/details.aspx?id=53591)
