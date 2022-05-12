@@ -1,6 +1,6 @@
 {
     "params": {
-        "sql-db": "cpdb_test_db_batch"
+        "db": "cpdb_test_db_batch"
     },
     "stages": {
         "Создание": {

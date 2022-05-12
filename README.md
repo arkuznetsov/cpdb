@@ -28,6 +28,7 @@
 - [cli](https://github.com/Stepa86/cli)
 - [yadisk](https://github.com/kuntashov/oscript-yadisk)
 - [nextcloud-lib](https://github.com/arkuznetsov/nextcloud-lib)
+- [ClientSSH](https://github.com/arkuznetsov/oscript-ssh)
 - [ParserFileV8i](https://github.com/ret-Phoenix/parserV8i)
 - [7-zip](http://www.7-zip.org/)
 - [MS Command Line Utilities for SQL Server (sqlcmd)](https://www.microsoft.com/en-us/download/details.aspx?id=53591)
@@ -57,12 +58,17 @@
 || **copy** | - Копировать/переместить файлы |
 || **split** | - Архивировать файл с разбиением на части указанного размера (используется 7-Zip) |
 || **merge** | - Разархивировать файл (используется 7-Zip) |
-|| **putyadisk** | - Помещение файла на Yandex-Диск |
-|| **getyadisk** | - Получение файла из Yandex-Диска |
-|| **putnc** | - Помещение файла в сервис NextCloud |
-|| **getnc** | - Получение файла из сервиса NextCloud |
 || **mapdrive** | - Подключить сетевой диск |
 || **umapdrive** | - Отключить сетевой диск |
+| **yadisk** | Группа команд работы с сервисом Yandex-Диск |
+|| **put** | - Помещение файла на Yandex-Диск |
+|| **get** | - Получение файла из Yandex-Диска |
+| **nextcloud** | Группа команд работы с сервисом NextCloud |
+|| **put** | - Помещение файла в сервис NextCloud |
+|| **get** | - Получение файла из сервиса NextCloud |
+| **sftp** | Группа команд работы с SFTP-сервером |
+|| **put** | - Помещение файла на сервер SFTP |
+|| **get** | - Получение файла с сервера SFTP |
 | **batch** | - Последовательное выполнение команд по сценариям, заданным в файлах (json) |
 ||||
 
@@ -72,9 +78,9 @@
 
 | Общие параметры для команд группы: ||
 |-|-|
-| **--sql-srvr** | - Адрес сервера MS SQL |
-| **--sql-user** | - Пользователь сервера |
-| **--sql-pwd** | - Пароль пользователя сервера |
+| **--srvr** | - Адрес сервера MS SQL |
+| **--user** | - Пользователь сервера |
+| **--pwd** | - Пароль пользователя сервера |
 ----------------------------------------------------------------
 
 ## create - Создание базы MS SQL
@@ -82,13 +88,13 @@
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--sql-db** | - Имя базы для восстановления |
+| **--db** | - Имя базы для восстановления |
 | **--db-recovery** | - Установить модель восстановления (RECOVERY MODEL), возможные значения "FULL", "SIMPLE", "BULK_LOGGED" |
 
 #### Пример:
 
 ```bat
-cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 create --sql-db MyDatabase --db-recovery SIMPLE
+cpdb database --srvr MySQLName --user sa --pwd 12345 create --db MyDatabase --db-recovery SIMPLE
 ```
 
 ## backup - Создание резервной копии базы MS SQL
@@ -96,13 +102,13 @@ cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 create --sql-db
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--sql-db** | - Имя базы для восстановления |
+| **--db** | - Имя базы для восстановления |
 | **--bak-path** | - Путь к резервной копии |
 
 #### Пример:
 
 ```bat
-cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 backup --sql-db MyDatabase --bak-path "d:\MSSQL\Backup\MyDatabase_copy.bak"
+cpdb database --srvr MySQLName --user sa --pwd 12345 backup --db MyDatabase --bak-path "d:\MSSQL\Backup\MyDatabase_copy.bak"
 ```
 
 ## restore - Восстановление базы MS SQL из резервной копии
@@ -110,7 +116,7 @@ cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 backup --sql-db
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--sql-db** | - Имя базы для восстановления |
+| **--db** | - Имя базы для восстановления |
 | **--bak-path** | - Путь к резервной копии |
 | **--create-db** | - Создать базу в случае отсутствия |
 | **--db-owner** | - Имя владельца базы после восстановления |
@@ -126,7 +132,7 @@ cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 backup --sql-db
 #### Пример:
 
 ```bat
-cpdb database --sql-srvr MyNewSQLServer --sql-user SQLUser --sql-pwd 123456 restore --sql-db MyDatabase_copy --bak-path "d:\data\MyBackUpfile.bak" --create-db --shrink-db --db-owner SQLdbo --db-path "d:\MSSQL\data" --db-logpath "e:\MSSQL\logs" --db-recovery SIMPLE --delsrc
+cpdb database --srvr MyNewSQLServer --user SQLUser --pwd 123456 restore --db MyDatabase_copy --bak-path "d:\data\MyBackUpfile.bak" --create-db --shrink-db --db-owner SQLdbo --db-path "d:\MSSQL\data" --db-logpath "e:\MSSQL\logs" --db-recovery SIMPLE --delsrc
 ```
 
 ## compress - Выполнить компрессию страниц таблиц и индекстов в базе MS SQL
@@ -134,14 +140,14 @@ cpdb database --sql-srvr MyNewSQLServer --sql-user SQLUser --sql-pwd 123456 rest
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--sql-db** | - Имя базы для восстановления |
+| **--db** | - Имя базы для восстановления |
 | **--shrink-db** | - Сжать базу после выполнения компрессии |
 | **--shrink-log** | - Сжать файлы журнала транзакций после восстановления |
 
 #### Пример:
 
 ```bat
-cpdb database --sql-srvr MyNewSQLServer --sql-user SQLUser --sql-pwd 123456 compress --sql-db MyDatabase_copy --shrink-db
+cpdb database --srvr MyNewSQLServer --user SQLUser --pwd 123456 compress --db MyDatabase_copy --shrink-db
 ```
 
 ## drop - Удаление базы MS SQL
@@ -149,12 +155,12 @@ cpdb database --sql-srvr MyNewSQLServer --sql-user SQLUser --sql-pwd 123456 comp
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--sql-db** | - Имя базы для восстановления |
+| **--db** | - Имя базы для восстановления |
 
 #### Пример:
 
 ```bat
-cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 drop --sql-db MyDatabase
+cpdb database --srvr MySQLName --user sa --pwd 12345 drop --db MyDatabase
 ```
 
 ## script - Выполнить скрипты из файла(ов)
@@ -162,13 +168,13 @@ cpdb database --sql-srvr MySQLName --sql-user sa --sql-pwd 12345 drop --sql-db M
 | Параметры: ||
 |-|-|
 | **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--sql-files** | - Файлы SQL, содержащие текст скрипта, могут быть указаны несколько файлов, разделённые ";" |
-| **--sql-vars** | - Строка значений переменных (без пробелов) для скриптов SQL в виде "<Имя>=<Значение>", разделенные ";" |
+| **--files** | - Файлы SQL, содержащие текст скрипта, могут быть указаны несколько файлов, разделённые ";" |
+| **--vars** | - Строка значений переменных (без пробелов) для скриптов SQL в виде "<Имя>=<Значение>", разделенные ";" |
 
 #### Пример:
 
 ```bat
-cpdb database --sql-srvr MyNewSQLServer --sql-user SQLUser --sql-pwd 123456 script --params "./JSON/cpdb_env.json" --sql-files "./tools/config_error.sql;./tools/print_message.sql" --sql-vars "varBase=MyDB;message=\"Hello world\""
+cpdb database --srvr MyNewSQLServer --user SQLUser --pwd 123456 script --params "./JSON/cpdb_env.json" --files "./tools/config_error.sql;./tools/print_message.sql" --vars "varBase=MyDB;message=\"Hello world\""
 ```
 
 #### Пример config_error.sql:
@@ -388,123 +394,6 @@ cpdb file merge --file "d:\MSSQL\Backup\MyDatabase_copy.7z.001" --delsrc
 cpdb file merge --list "d:\MSSQL\Backup\MyDatabase_copy.split" --delsrc
 ```
 
-## putyadisk - Помещение файла на Yandex-Диск
-
-| Параметры: ||
-|-|-|
-| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--file** | - Путь к локальному файлу для помещения на Yandex-Диск |
-| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на Yandex-Диск (параметр --file игнорируется) |
-| **--token** | - Token авторизации |
-| **--path** | - Путь к каталогу на Yandex-Диск, куда помещать загружаемые файлы |
-| **--replace** | - Перезаписать файл на Yandex-диске при загрузке |
-| **--delsrc** | - Удалить исходные файлы после отправки |
-
-#### Пример:
-
-```bat
-// Помещает файл "MyDatabase_copy.bak" на Yandex-диск
-cpdb file putyadisk --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
-```
-
-```bat
-// Помещает файлы, указанные в списке "MyDatabase_copy.split" на Yandex-диск
-cpdb file putyadisk --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
-```
-
-## getyadisk - Получение файла из Yandex-Диска
-
-### Параметры:
-
-| Параметры: ||
-|-|-|
-| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
-| **--token** | - Token авторизации |
-| **--file** | - Путь к файлу на Yandex-Диск для загрузки |
-| **--list** | - Путь к файлу на Yandex-Диск со списком файлов, которые будут загружены (параметр --file игнорируется) |
-| **--delsrc** | - Удалить файлы из Yandex-Диск после получения |
-
-#### Пример:
-
-```bat
-// Получает файл "MyDatabase_copy.bak" из Yandex-диска
-cpdb file getyadisk --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
-```
-
-```bat
-// Получает файлы, указанные в списке "MyDatabase_copy.split" из Yandex-диска
-cpdb file getyadisk --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
-```
-
-##### Для получения токена авторизации Яндекс-диска:
-
-* Зарегистрировать приложение: https://oauth.yandex.ru/client/new
-	* Название приложения, например "OScript.YaDisk"
-	* Платформы "Веб-сервисы"
-	* Callback URI #1:  https://oauth.yandex.ru/verification_code
-* Дать нужные права для приложения
-	* Сервис Яндекс.Диск REST API
-	  	* Запись в любом месте на Диске
-	  	  	* Чтение всего Диска
-	  	  	* Доступ к информации о Диске 
-* Нажать "Создать приложение" внизу формы: после этого будет показан ID пароль, прочие параметры созданного приложения
-* Получить токен для приложения: перейти по ссылке https://oauth.yandex.ru/authorize?response_type=token&client_id=<ВАШ ID (ID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)>
-* На вопрос "Приложение OScript.YaDisk запрашивает доступ к вашим данным на Яндексе" ответить "Разрешить": после этого на экране появится сформированный токен
-
-## putnc - Помещение файла в сервис NextCloud
-
-| Параметры: ||
-|-|-|
-| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--service** | - Адрес сервиса NextCloud |
-| **--user** | - Имя пользователя сервиса NextCloud |
-| **--pwd** | - Пароль пользователя сервиса NextCloud |
-| **--file** | - Путь к локальному файлу для помещения в сервис NextCloud |
-| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены в сервис NextCloud (параметр --file игнорируется) |
-| **--path** | - Путь к каталогу в сервисе NextCloud, куда помещать загружаемые файлы |
-| **--replace** | - Перезаписать файл в сервисе NextCloud при загрузке |
-| **--delsrc** | - Удалить исходные файлы после отправки |
-
-#### Пример:
-
-```bat
-// Помещает файл "MyDatabase_copy.bak" в сервис NextCloud
-cpdb file putnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
-```
-
-```bat
-// Помещает файлы, указанные в списке "MyDatabase_copy.split" в сервис NextCloud
-cpdb file putnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
-```
-
-## getnc - Получение файла из сервиса NextCloud
-
-### Параметры:
-
-| Параметры: ||
-|-|-|
-| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
-| **--service** | - Адрес сервиса NextCloud |
-| **--user** | - Имя пользователя сервиса NextCloud |
-| **--pwd** | - Пароль пользователя сервиса NextCloud |
-| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
-| **--file** | - Путь к файлу в сервисе NextCloud для загрузки |
-| **--list** | - Путь к файлу в сервисе NextCloud со списком файлов, которые будут загружены (параметр --file игнорируется) |
-| **--delsrc** | - Удалить файлы из сервиса NextCloud после получения |
-
-#### Пример:
-
-```bat
-// Получает файл "MyDatabase_copy.bak" из сервиса NextCloud
-cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
-```
-
-```bat
-// Получает файлы, указанные в списке "MyDatabase_copy.split" из сервиса NextCloud
-cpdb file getnc --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
-```
-
 ## mapdrive - Подключить сетевой диск
 
 | Параметры: ||
@@ -534,6 +423,189 @@ cpdb file mapdrive --drive N --res "\\MyServer\MyFolder" --user superuser --pwd 
 cpdb file umapdrive --drive N
 ```
 
+## yadisk - Группа команд работы с сервисом Yandex-Диск
+
+| Общие параметры для команд группы: ||
+|-|-|
+| **--token** | - Token авторизации |
+---
+
+## put - Помещение файла на Yandex-Диск
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--file** | - Путь к локальному файлу для помещения на Yandex-Диск |
+| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на Yandex-Диск (параметр --file игнорируется) |
+| **--path** | - Путь к каталогу на Yandex-Диск, куда помещать загружаемые файлы |
+| **--replace** | - Перезаписать файл на Yandex-диске при загрузке |
+| **--delsrc** | - Удалить исходные файлы после отправки |
+
+#### Пример:
+
+```bat
+// Помещает файл "MyDatabase_copy.bak" на Yandex-диск
+cpdb yadisk --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX put --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --path "/transfer" --delsrc
+```
+
+```bat
+// Помещает файлы, указанные в списке "MyDatabase_copy.split" на Yandex-диск
+cpdb yadisk --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX put --list "d:\MSSQL\Backup\MyDatabase_copy.split" --path "/transfer" --delsrc
+```
+
+## get - Получение файла из Yandex-Диска
+
+### Параметры:
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
+| **--file** | - Путь к файлу на Yandex-Диск для загрузки |
+| **--list** | - Путь к файлу на Yandex-Диск со списком файлов, которые будут загружены (параметр --file игнорируется) |
+| **--delsrc** | - Удалить файлы из Yandex-Диск после получения |
+
+#### Пример:
+
+```bat
+// Получает файл "MyDatabase_copy.bak" из Yandex-диска
+cpdb yadisk --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX get --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --file "/transfer/MyDatabase_copy.bak" --delsrc
+```
+
+```bat
+// Получает файлы, указанные в списке "MyDatabase_copy.split" из Yandex-диска
+cpdb yadisk --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX get --path "d:\MSSQL\Backup\" --list "/transfer/MyDatabase_copy.split" -delsrc
+```
+
+### Для получения токена авторизации Яндекс-диска:
+
+* Зарегистрировать приложение: https://oauth.yandex.ru/client/new
+	* Название приложения, например "OScript.YaDisk"
+	* Платформы "Веб-сервисы"
+	* Callback URI #1:  https://oauth.yandex.ru/verification_code
+* Дать нужные права для приложения
+	* Сервис Яндекс.Диск REST API
+	  	* Запись в любом месте на Диске
+	  	  	* Чтение всего Диска
+	  	  	* Доступ к информации о Диске 
+* Нажать "Создать приложение" внизу формы: после этого будет показан ID пароль, прочие параметры созданного приложения
+* Получить токен для приложения: перейти по ссылке https://oauth.yandex.ru/authorize?response_type=token&client_id=<ВАШ ID (ID: XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX)>
+* На вопрос "Приложение OScript.YaDisk запрашивает доступ к вашим данным на Яндексе" ответить "Разрешить": после этого на экране появится сформированный токен
+
+## nextcloud - Группа команд работы с сервисом NextCloud
+
+| Общие параметры для команд группы: ||
+|-|-|
+| **--srvr** | - Адрес сервиса NextCloud |
+| **--user** | - Имя пользователя сервиса NextCloud |
+| **--pwd** | - Пароль пользователя сервиса NextCloud |
+---
+
+## put - Помещение файла в сервис NextCloud
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--file** | - Путь к локальному файлу для помещения в сервис NextCloud |
+| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены в сервис NextCloud (параметр --file игнорируется) |
+| **--path** | - Путь к каталогу в сервисе NextCloud, куда помещать загружаемые файлы |
+| **--replace** | - Перезаписать файл в сервисе NextCloud при загрузке |
+| **--delsrc** | - Удалить исходные файлы после отправки |
+
+#### Пример:
+
+```bat
+// Помещает файл "MyDatabase_copy.bak" в сервис NextCloud
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" put --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
+```
+
+```bat
+// Помещает файлы, указанные в списке "MyDatabase_copy.split" в сервис NextCloud
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" put --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
+```
+
+## get - Получение файла из сервиса NextCloud
+
+### Параметры:
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
+| **--file** | - Путь к файлу в сервисе NextCloud для загрузки |
+| **--list** | - Путь к файлу в сервисе NextCloud со списком файлов, которые будут загружены (параметр --file игнорируется) |
+| **--delsrc** | - Удалить файлы из сервиса NextCloud после получения |
+
+#### Пример:
+
+```bat
+// Получает файл "MyDatabase_copy.bak" из сервиса NextCloud
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
+```
+
+```bat
+// Получает файлы, указанные в списке "MyDatabase_copy.split" из сервиса NextCloud
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
+```
+
+## sftp - Группа команд работы с SFTP-сервером
+
+| Общие параметры для команд группы: ||
+|-|-|
+| **--srvr** | - Адрес сервера SFTP  в виде `<адрес>:<порт>` |
+| **--port** | - Порт сервера SFTP |
+| **--user** | - Имя пользователя сервера SFTP |
+| **--pwd** | - Пароль пользователя сервера SFTP, если указан параметр **--key-file**, то используется как пароль для доступа к закрытому ключу |
+| **--key-file** | - Путь к файлу закрытого ключа, если указано, то параметр **--pwd** интерпретируется как пароль к закрытому ключу |
+---
+
+## put - Помещение файла на сервер SFTP
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--file** | - Путь к локальному файлу для помещения на сервер SFTP |
+| **--list** | - Путь к локальному файлу со списком файлов, которые будут помещены на сервер SFTP (параметр --file игнорируется) |
+| **--path** | - Путь к каталогу на сервере SFTP, куда помещать загружаемые файлы |
+| **--replace** | - Перезаписать файл на сервере SFTP при загрузке |
+| **--delsrc** | - Удалить исходные файлы после отправки |
+
+#### Пример:
+
+```bat
+// Помещает файл "MyDatabase_copy.bak" на сервере SFTP
+cpdb sftp --server "sftp.myServer.org" --port 22 --user "admin" --pwd "P@$$w0rd" put --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --path "/transfer" --delsrc
+```
+
+```bat
+// Помещает файлы, указанные в списке "MyDatabase_copy.split" на сервере SFTP
+cpdb sftp --server "sftp.myServer.org" --port 22 --user "admin" --pwd "P@$$w0rd" put --list "d:\MSSQL\Backup\MyDatabase_copy.split" --path "/transfer" --delsrc
+```
+
+## get - Получение файла с сервера SFTP
+
+### Параметры:
+
+| Параметры: ||
+|-|-|
+| **--params** | - Файлы JSON содержащие значения параметров, могут быть указаны несколько файлов разделенные ";" (параметры командной строки имеют более высокий приоритет)|
+| **--path** | - Путь к локальному каталогу для сохранения загруженных файлов |
+| **--file** | - Путь к файлу на сервере SFTP для загрузки |
+| **--list** | - Путь к файлу на сервере SFTP со списком файлов, которые будут загружены (параметр --file игнорируется) |
+| **--delsrc** | - Удалить файлы с сервера SFTP после получения |
+
+#### Пример:
+
+```bat
+// Получает файл "MyDatabase_copy.bak" с сервера SFTP
+cpdb sftp --server "sftp.myServer.org" --port 22 --user "user" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --file "/transfer/MyDatabase_copy.bak" --delsrc
+```
+
+```bat
+// Получает файлы, указанные в списке "MyDatabase_copy.split" с сервера SFTP
+cpdb sftp --server "sftp.myServer.org" --port 22 --user "user" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\" --list "/transfer/MyDatabase_copy.split" -delsrc
+```
+
 ## batch - Выполнить сценарий
 
 Последовательно выполняет команды указнные в файле JSON
@@ -558,11 +630,11 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
             "description": "Восстановление из резервной копии",
             "command": "database restore",
             "params": {
-                "sql-srvr": "MySQLServer",
-                "sql-user": "_1CSrvUsr1",
-                "sql-pwd": "p@ssw0rd",
+                "srvr": "MySQLServer",
+                "user": "_1CSrvUsr1",
+                "pwd": "p@ssw0rd",
                 "bak-path": "d:\\tmp\\PRD_DB_MyDomain.bak",
-                "sql-db": "TST_DB_MyDomain",
+                "db": "TST_DB_MyDomain",
                 "db-owner": "_1CSrvUsr1",
                 "db-path": "D:\\sqldata",
                 "db-logpath": "D:\\sqldata",
@@ -583,10 +655,10 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
             "description": "Сжатие базы данных",
             "command": "database compress",
             "params": {
-                "sql-srvr": "Sport1",
-                "sql-user": "_1CSrvUsr1",
-                "sql-pwd": "p@ssw0rd",
-                "sql-db": "TST_DB_MyDomain",
+                "srvr": "Sport1",
+                "user": "_1CSrvUsr1",
+                "pwd": "p@ssw0rd",
+                "db": "TST_DB_MyDomain",
                 "shrink-db": true
             }
         }

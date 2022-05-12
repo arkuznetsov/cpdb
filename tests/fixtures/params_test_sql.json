@@ -1,4 +1,4 @@
 {
-    "sql-db" : "cpdb_test_db_params",
+    "db" : "cpdb_test_db_params",
     "db-recovery": "FULL"
 }

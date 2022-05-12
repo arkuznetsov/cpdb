@@ -37,13 +37,18 @@ jobs:
           opm install opm
           opm install --dev
 
-      # Запуск контейнера NextCloud
-      - name: Запуск контейнера NextCloud
+      # Запуск контейнеров NextCloud и OpenSSH
+      - name: Запуск контейнеров NextCloud и OpenSSH
         env:
-          NC_ADDRESS: ${{ secrets.NC_ADDRESS }}
-          NC_ADMIN_NAME: ${{ secrets.NC_ADMIN_NAME }}
-          NC_ADMIN_PWD: ${{ secrets.NC_ADMIN_PWD }}
-        run: ./tools/nextcloud/startenv.bat
+          NC_TEST_ADDRESS: ${{ secrets.NC_TEST_ADDRESS }}
+          NC_TEST_ADMIN_NAME: ${{ secrets.NC_TEST_ADMIN_NAME }}
+          NC_TEST_ADMIN_PWD: ${{ secrets.NC_TEST_ADMIN_PWD }}
+          SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
+          SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
+          SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
+        run: |
+          docker-compose --file ./tools/docker-compose.yml up --build -d
+          oscript ./tools/nextcloud/checkenv.os
 
       # Запуск тестов и сбор покрытия кода
       - name: Покрытие кода
@@ -51,14 +56,17 @@ jobs:
           CPDB_SQL_SRVR: ${{ secrets.CPDB_SQL_SRVR }}
           CPDB_SQL_USER: ${{ secrets.CPDB_SQL_USER }}
           CPDB_SQL_PWD: ${{ secrets.CPDB_SQL_PWD }}
-          NC_ADDRESS: ${{ secrets.NC_ADDRESS }}
-          NC_ADMIN_NAME: ${{ secrets.NC_ADMIN_NAME }}
-          NC_ADMIN_PWD: ${{ secrets.NC_ADMIN_PWD }}
+          NC_TEST_ADDRESS: ${{ secrets.NC_TEST_ADDRESS }}
+          NC_TEST_ADMIN_NAME: ${{ secrets.NC_TEST_ADMIN_NAME }}
+          NC_TEST_ADMIN_PWD: ${{ secrets.NC_TEST_ADMIN_PWD }}
+          SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
+          SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
+          SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
         run: oscript ./tasks/coverage.os
 
-      # Удаление контейнера NextCloud
-      - name: Удаление контейнера NextCloud
-        run: ./tools/nextcloud/stopenv.bat
+      # Остановка и удаление контейнеров NextCloud и OpenSSH
+      - name: Остановка и удаление контейнеров NextCloud и OpenSSH
+        run: docker-compose --file ./tools/docker-compose.yml down
 
       - name: Получение packagedef
         shell: pwsh
