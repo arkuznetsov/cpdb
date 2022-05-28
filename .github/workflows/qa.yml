@@ -62,7 +62,7 @@ jobs:
           SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
           SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
           SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
-          LOGOS_CONFIG : "logger.oscript.app.cpdb=DEBUG"
+          LOGOS_CONFIG : "logger.oscript.app.cpdb=INFO"
         run: oscript ./tasks/coverage.os
 
       # Остановка и удаление контейнеров NextCloud и OpenSSH
