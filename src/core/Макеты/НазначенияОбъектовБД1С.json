@@ -1,0 +1,493 @@
+{
+	"ACC": {
+		"Префикс": "Acc",
+		"Тип": "ПланСчетов",
+		"ТипАнгл": "ChartOfAccounts",
+		"Назначение": "Основная"
+	},
+	"ACCCHNGR": {
+		"Префикс": "AccChngR",
+		"Тип": "ПланСчетов",
+		"ТипАнгл": "ChartOfAccounts",
+		"Назначение": "Изменения"
+	},
+	"ACCOPT": {
+		"Префикс": "AccOpt",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "Опции"
+	},
+	"ACCRG": {
+		"Префикс": "AccRg",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "Основная"
+	},
+	"ACCRGAT": {
+		"Префикс": "AccRgAT",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "ИтогиПоСчету"
+	},
+	"ACCRGCHNGR": {
+		"Префикс": "AccRgChngR",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "Изменения"
+	},
+	"ACCRGCT": {
+		"Префикс": "AccRgCT",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "ОборотыМеждуСчетами"
+	},
+	"ACCRGED": {
+		"Префикс": "AccRgED",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "ЗначенияСубконто"
+	},
+	"ACCRGOPT": {
+		"Префикс": "AccRgOpt",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "НастройкиХраненияИтогов"
+	},
+	"ACCSINF": {
+		"Префикс": "AccSInf",
+		"Тип": "РегистрБухгалтерии",
+		"ТипАнгл": "AccountingRegister",
+		"Назначение": "ИнициализированныеОбласти"
+	},
+	"ACCUMRG": {
+		"Префикс": "AccumRg",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "Основная"
+	},
+	"ACCUMRGAGGGRIDK": {
+		"Префикс": "AccumRgAggGridK",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "СетьАгрегатов"
+	},
+	"ACCUMRGAGGOPTK": {
+		"Префикс": "AccumRgAggOptK",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "ОпцииСетиАгрегатов"
+	},
+	"ACCUMRGBFK": {
+		"Префикс": "AccumRgBfK",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "БуферНовыхОборотов"
+	},
+	"ACCUMRGCHNGR": {
+		"Префикс": "AccumRgChngR",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "Изменения"
+	},
+	"ACCUMRGDLK": {
+		"Префикс": "AccumRgDlK",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "НовыеОбороты"
+	},
+	"ACCUMRGOPT": {
+		"Префикс": "AccumRgOpt",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "Опции"
+	},
+	"ACCUMRGST": {
+		"Префикс": "AccumRgSt",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "Стаистика"
+	},
+	"ACCUMRGT": {
+		"Префикс": "AccumRgT",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "Остатки"
+	},
+	"ACCUMRGTN": {
+		"Префикс": "AccumRgTn",
+		"Тип": "РегистрНакопления",
+		"ТипАнгл": "AccumulationRegister",
+		"Назначение": "Обороты"
+	},
+	"BPR": {
+		"Префикс": "BPr",
+		"Тип": "БизнесПроцесс",
+		"ТипАнгл": "BusinessProcess",
+		"Назначение": "Основная"
+	},
+	"BPRCHNGR": {
+		"Префикс": "BPrChngR",
+		"Тип": "БизнесПроцесс",
+		"ТипАнгл": "BusinessProcess",
+		"Назначение": "Изменения"
+	},
+	"BPRPOINTS": {
+		"Префикс": "BPrPoints",
+		"Тип": "БизнесПроцесс",
+		"ТипАнгл": "BusinessProcess",
+		"Назначение": "ТочкиМаршрута"
+	},
+	"CHRC": {
+		"Префикс": "Chrc",
+		"Тип": "ПланВидовХарактеристик",
+		"ТипАнгл": "ChartOfCharacteristicTypes",
+		"Назначение": "Основная"
+	},
+	"CHRCCHNGR": {
+		"Префикс": "ChrcChngR",
+		"Тип": "ПланВидовХарактеристик",
+		"ТипАнгл": "ChartOfCharacteristicTypes",
+		"Назначение": "Изменения"
+	},
+	"CHRCOPT": {
+		"Префикс": "ChrcOpt",
+		"Тип": "ПланВидовХарактеристик",
+		"ТипАнгл": "ChartOfCharacteristicTypes",
+		"Назначение": "Опции"
+	},
+	"CHRCSINF": {
+		"Префикс": "ChrcSInf",
+		"Тип": "ПланВидовХарактеристик",
+		"ТипАнгл": "ChartOfCharacteristicTypes",
+		"Назначение": "ИнициализированныеОбласти"
+	},
+	"CKINDS": {
+		"Префикс": "CKinds",
+		"Тип": "ПланВидовРасчета",
+		"ТипАнгл": "ChartOfCalculationTypes",
+		"Назначение": "Основная"
+	},
+	"CKINDSCHNGR": {
+		"Префикс": "CKindsChngR",
+		"Тип": "ПланВидовРасчета",
+		"ТипАнгл": "ChartOfCalculationTypes",
+		"Назначение": "Изменения"
+	},
+	"CKINDSOPT": {
+		"Префикс": "CKindsOpt",
+		"Тип": "ПланВидовРасчета",
+		"ТипАнгл": "ChartOfCalculationTypes",
+		"Назначение": "Опции"
+	},
+	"CKINDSSINF": {
+		"Префикс": "CKindsSInf",
+		"Тип": "ПланВидовРасчета",
+		"ТипАнгл": "ChartOfCalculationTypes",
+		"Назначение": "ИнициализированныеОбласти"
+	},
+	"CONST": {
+		"Префикс": "Const",
+		"Тип": "Константы",
+		"ТипАнгл": "Constants",
+		"Назначение": "Основная"
+	},
+	"CONSTCHNGR": {
+		"Префикс": "ConstChngR",
+		"Тип": "Константы",
+		"ТипАнгл": "Constants",
+		"Назначение": "Изменения"
+	},
+	"CONSTS": {
+		"Префикс": "Consts",
+		"Тип": "Константа",
+		"ТипАнгл": "Constant",
+		"Назначение": "Основная"
+	},
+	"CONSTSCHNGR": {
+		"Префикс": "ConstsChngR",
+		"Тип": "Константа",
+		"ТипАнгл": "Constant",
+		"Назначение": "Изменения"
+	},
+	"CRG": {
+		"Префикс": "CRg",
+		"Тип": "РегистрРасчета",
+		"ТипАнгл": "CalculationRegister",
+		"Назначение": "Основная"
+	},
+	"CRGCHNGR": {
+		"Префикс": "CRgChngR",
+		"Тип": "РегистрРасчета",
+		"ТипАнгл": "CalculationRegister",
+		"Назначение": "Изменения"
+	},
+	"CRGACTPER": {
+		"Префикс": "CRgActPer",
+		"Тип": "РегистрРасчета",
+		"ТипАнгл": "CalculationRegister",
+		"Назначение": "ФактическиеПериодыДействия"
+	},
+	"CRGRECALC": {
+		"Префикс": "CRgRecalc",
+		"Тип": "РегистрРасчета",
+		"ТипАнгл": "CalculationRegister",
+		"Назначение": "Перерасчеты"
+	},
+	"CRGRECALCCHNGR": {
+		"Префикс": "CRgRecalcChngR",
+		"Тип": "РегистрРасчета",
+		"ТипАнгл": "CalculationRegister",
+		"Назначение": "ПерерасчетыИзменения"
+	},
+	"DOCUMENT": {
+		"Префикс": "Document",
+		"Тип": "Документ",
+		"ТипАнгл": "Document",
+		"Назначение": "Основная"
+	},
+	"DOCUMENTCHNGR": {
+		"Префикс": "DocumentChngR",
+		"Тип": "Документ",
+		"ТипАнгл": "Document",
+		"Назначение": "Изменения"
+	},
+	"DOCUMENTJOURNAL": {
+		"Префикс": "DocumentJournal",
+		"Тип": "ЖурналДокументов",
+		"ТипАнгл": "DocumentJournal",
+		"Назначение": "Основная"
+	},
+	"ENUM": {
+		"Префикс": "Enum",
+		"Тип": "Перечисление",
+		"ТипАнгл": "Enum",
+		"Назначение": "Основная"
+	},
+	"INFORG": {
+		"Префикс": "InfoRg",
+		"Тип": "РегистрСведений",
+		"ТипАнгл": "InformationRegister",
+		"Назначение": "Основная"
+	},
+	"INFORGCHNGR": {
+		"Префикс": "InfoRgChngR",
+		"Тип": "РегистрСведений",
+		"ТипАнгл": "InformationRegister",
+		"Назначение": "Изменения"
+	},
+	"INFORGOPT": {
+		"Префикс": "InfoRgOpt",
+		"Тип": "РегистрСведений",
+		"ТипАнгл": "InformationRegister",
+		"Назначение": "Опции"
+	},
+	"INFORGSF": {
+		"Префикс": "InfoRgSF",
+		"Тип": "РегистрСведений",
+		"ТипАнгл": "InformationRegister",
+		"Назначение": "СрезПервых"
+	},
+	"INFORGSL": {
+		"Префикс": "InfoRgSL",
+		"Тип": "РегистрСведений",
+		"ТипАнгл": "InformationRegister",
+		"Назначение": "СрезПоследних"
+	},
+	"INTEGSERVICESETTINGS": {
+		"Префикс": "IntegServiceSettings",
+		"Тип": "СервисИнтеграции",
+		"ТипАнгл": "InterationService",
+		"Назначение": "Основная"
+	},
+	"NODE": {
+		"Префикс": "Node",
+		"Тип": "ПланОбмена",
+		"ТипАнгл": "ExchangePlan",
+		"Назначение": "Основная"
+	},
+	"REFERENCE": {
+		"Префикс": "Reference",
+		"Тип": "Справочник",
+		"ТипАнгл": "Catalog",
+		"Назначение": "Основная"
+	},
+	"REFERENCECHNGR": {
+		"Префикс": "ReferenceChngR",
+		"Тип": "Справочник",
+		"ТипАнгл": "Catalog",
+		"Назначение": "Изменения"
+	},
+	"REFOPT": {
+		"Префикс": "RefOpt",
+		"Тип": "Справочник",
+		"ТипАнгл": "Catalog",
+		"Назначение": "Опции"
+	},
+	"REFSINF": {
+		"Префикс": "RefSInf",
+		"Тип": "Справочник",
+		"ТипАнгл": "Catalog",
+		"Назначение": "ИнициализированныеОбласти"
+	},
+	"SCHEDULEDJOBS": {
+		"Префикс": "ScheduledJobs",
+		"Тип": "РегламентноеЗадание",
+		"ТипАнгл": "ScheduledJob",
+		"Назначение": "Основная"
+	},
+	"SEQ": {
+		"Префикс": "Seq",
+		"Тип": "Последовательность",
+		"ТипАнгл": "Sequence",
+		"Назначение": "Основная"
+	},
+	"SEQCHNGR": {
+		"Префикс": "SeqChngR",
+		"Тип": "Последовательность",
+		"ТипАнгл": "Sequence",
+		"Назначение": "Изменения"
+	},
+	"TASK": {
+		"Префикс": "Task",
+		"Тип": "Задача",
+		"ТипАнгл": "Task",
+		"Назначение": "Основная"
+	},
+	"TASKCHNGR": {
+		"Префикс": "TaskChngR",
+		"Тип": "Задача",
+		"ТипАнгл": "Task",
+		"Назначение": "Изменения"
+	},
+	"VT": {
+		"Префикс": "VT",
+		"Подчиненный" : true,
+		"Тип": "ТабличнаяЧасть",
+		"ТипАнгл": "TabularSection",
+		"Назначение": "ТабличнаяЧасть"
+	},
+	"EXTDIM": {
+		"Префикс": "ExtDim",
+		"Подчиненный" : true,
+		"Тип": "ВидыСубконто",
+		"ТипАнгл": "ExtDimensionTypes",
+		"Назначение": "ТабличнаяЧасть"
+	},
+	"LEADINGCK": {
+		"Префикс": "LeadingCK",
+		"Подчиненный" : true,
+		"Тип": "ВедущиеВидыРасчета",
+		"ТипАнгл": "LeadingCalculationTypes",
+		"Назначение": "ТабличнаяЧасть"
+	},
+	"BASECK": {
+		"Префикс": "BaseCK",
+		"Подчиненный" : true,
+		"Тип": "БазовыеВидыРасчета",
+		"ТипАнгл": "BaseCalculationTypes",
+		"Назначение": "ТабличнаяЧасть"
+	},
+	"DISPLACEDCK": {
+		"Префикс": "DisplacedCK",
+		"Подчиненный" : true,
+		"Тип": "ВытесняющиеВидыРасчета ",
+		"ТипАнгл": "DisplacingCalculationTypes",
+		"Назначение": "ТабличнаяЧасть "
+	},
+	"FLD": {
+		"Префикс": "Fld",
+		"Тип": "Поле",
+		"ТипАнгл": "Field",
+		"Назначение": "Поле"
+	},
+	"LINENO": {
+		"Префикс": "LineNo",
+		"Тип": "НомерСтроки",
+		"ТипАнгл": "LineNumber",
+		"Назначение": "Поле"
+	},
+	"CONFIG": {
+		"Префикс": "Config",
+		"Тип": "Конфигурация",
+		"ТипАнгл": "Configuration",
+		"Назначение": "Конфигурация"
+	}
+}
+
+	// "AccumRgAggDict10h"
+	// "AccumRgAggDict11h"
+	// "AccumRgAggDict12h"
+	// "AccumRgAggDict13h"
+	// "AccumRgAggDict14h"
+	// "AccumRgAggDict15h"
+	// "AccumRgAggDict16h"
+	// "AccumRgAggDict17h"
+	// "AccumRgAggDict18h"
+	// "AccumRgAggDict19h"
+	// "AccumRgAggDict1h"
+	// "AccumRgAggDict2h"
+	// "AccumRgAggDict3h"
+	// "AccumRgAggDict4h"
+	// "AccumRgAggDict5h"
+	// "AccumRgAggDict6h"
+	// "AccumRgAggDict7h"
+	// "AccumRgAggDict8h"
+	// "AccumRgAggDict9h"
+	// "AccumRgAggDictah"
+	// "AccumRgAggDictbh"
+	// "AccumRgAggDictch"
+	// "AccumRgAggDictdh"
+	// "AccumRgAggDicteh"
+	// "AccumRgAggDictfh"
+	// "AccumRgAggDims"
+	// "Bots"
+	// "ByDim"
+	// "ByDims"
+	// "ByField"
+	// "ByOwnerField"
+	// "ByParentField"
+	// "ByProperty"
+	// "ByResource"
+	// "CommonSettings"
+	// "ConfigChngR"
+	// "DataHistoryAfterWriteQueue"
+	// "DataHistoryLatestVersions"
+	// "DataHistoryLatestVersions1"
+	// "DataHistoryLatestVersions2"
+	// "DataHistoryMetadata"
+	// "DataHistoryQueue0"
+	// "DataHistorySettings"
+	// "DataHistoryVersions"
+	// "DataSeparationUse"
+	// "DbCopies"
+	// "DbCopiesInitialLast"
+	// "DbCopiesSettings"
+	// "DbCopiesTablesStates"
+	// "DbCopiesTrChanges"
+	// "DbCopiesTrChObj"
+	// "DbCopiesTrLogs"
+	// "DbCopiesTrTables"
+	// "DbCopiesUpdates"
+	// "DynListSettings"
+	// "Ecs"
+	// "ErrorProcessingSettings"
+	// "ExtDataSrcPrms"
+	// "ExtensionsInfo"
+	// "ExtensionsInfoNGS"
+	// "ExtensionsRestruct"
+	// "ExtensionsRestructNGS"
+	// "ExtsChngR"
+	// "FilesStruDmm"
+	// "FrmDtSettings"
+	// "IBVersionStruDmm"
+	// "LineNo"
+	// "ODataSettings"
+	// "RepSettings"
+	// "RepVarSettings"
+	// "SeqB"
+	// "SystemSettings"
+	// "Turnover"
+	// "TurnoverCt"
+	// "TurnoverDt"
+	// "UsersDmm"
+	// "UsersWorkHistory"

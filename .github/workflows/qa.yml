@@ -5,7 +5,7 @@ on: [push, pull_request]
 
 env:
   ACTIONS_ALLOW_UNSECURE_COMMANDS: true
-  BRANCH_NAME: ${{ github.head_ref || github.ref_name }} 
+  BRANCH_NAME: ${{ github.head_ref || github.ref_name }}
 
 jobs:
   build:
@@ -62,6 +62,7 @@ jobs:
           SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
           SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
           SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
+          LOGOS_CONFIG : "logger.oscript.app.cpdb=INFO"
         run: oscript ./tasks/coverage.os
 
       # Остановка и удаление контейнеров NextCloud и OpenSSH
