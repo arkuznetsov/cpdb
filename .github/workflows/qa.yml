@@ -62,6 +62,7 @@ jobs:
           SFTP_TEST_ADDRESS: ${{ secrets.SFTP_TEST_ADDRESS }}
           SFTP_TEST_USER: ${{ secrets.SFTP_TEST_USER }}
           SFTP_TEST_PWD: ${{ secrets.SFTP_TEST_PWD }}
+          YADISK_TOKEN: ${{ secrets.YADISK_TOKEN }}
           LOGOS_CONFIG : "logger.oscript.app.cpdb=INFO"
         run: oscript ./tasks/coverage.os
 
