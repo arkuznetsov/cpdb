@@ -31,8 +31,9 @@
    * [Класс РаботаСNextCloud](#lib-nextcloud)
    * [Класс РаботаСSFTP](#lib-sftp)
    * [Класс СтруктураХраненияИБ](#lib-dbstoragestructure)
+* [Запуск тестов](#Тестирование)
 
-<a id="Зависимости"></a> Требуются следующие библиотеки и инструменты:
+## <a id="Зависимости"></a> Требуются следующие библиотеки и инструменты:
 - [1commands](https://github.com/artbear/1commands)
 - [logos](https://github.com/oscript-library/logos)
 - [v8runner](https://github.com/oscript-library/v8runner)
@@ -1304,3 +1305,35 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
      *ОперацийСканирования    - Число     - количество операций сканирования (scan)
      *ОперацийПоиска          - Число     - количество операций поиска (seek)
      *ОперацийЗаписи          - Число     - количество операций записи (write)
+
+## <a id="Тестирование"></a> Запуск тестов
+
+### Необходимые настройки
+
+Для тестирования подключения / отключения сетевого диска требуются дополнительные настройки.
+
+В реестре в ключе `HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\WebClient\Parameters` указать:
+
+**BasicAuthLevel** : 0x00000002 (2)
+
+В реестре в ключе `HKEY_LOCAL_MACHINE\System\CurrentControlSet\Control\Session Manager` указать:
+
+**ProtectionMode** : 0x00000000 (0)
+
+### Выполнение тестов
+
+Запуск и остановка окружения выполняются автоматически.
+
+`./tools/runtests.bat`
+
+### Запуск окружения
+
+Для выполнения отладки
+
+`./tools/startenv.bat`
+
+### Остановка окружения
+
+После выполнения отладки
+
+`./tools/stopenv.bat`
