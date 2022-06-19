@@ -1319,8 +1319,9 @@
 		ТекстОперацийСканирования = "SUM(Stats.user_scans)";
 		ТекстОперацийПоиска       = "SUM(Stats.user_lookups)";
 		ТекстОперацийЗаписи       = "SUM(Stats.user_updates)";
-		ТекстСоединенияСтатистики = "LEFT OUTER JOIN [%1].sys.dm_db_index_usage_stats AS Stats
-		                            | ON Tables.object_id = Stats.object_id";
+		ТекстСоединенияСтатистики = СтрШаблон("LEFT OUTER JOIN [%1].sys.dm_db_index_usage_stats AS Stats
+		                                      | ON Tables.object_id = Stats.object_id",
+		                                      База);
 	КонецЕсли;
 
 	Условие = "";
