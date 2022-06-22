@@ -157,7 +157,12 @@
 		ТекстФильтрПодготовка =
 			СтрШаблон("CREATE TABLE #FilteredBases (name NVARCHAR(50));
 		              |EXEC sp_MSforeachdb
-		              |'INSERT INTO #FilteredBases SELECT ''?'' AS name FROM ?.sys.tables WHERE name = ''%1'''",
+		              |'INSERT INTO #FilteredBases
+		              |SELECT
+		              |''?'' AS name
+		              |FROM ?.sys.objects
+		              |WHERE
+		              |type = ''U'' AND name = ''%1'''",
 		              ФильтрПоТаблице);
 		ТекстФильтрСоединение = "INNER JOIN #FilteredBases AS FilteredBases
 		                        |ON DB.name = FilteredBases.name";
@@ -276,9 +281,10 @@
 	                         |SELECT
 	                         |	COUNT(name)
 	                         |FROM
-	                         |	%1.sys.tables
+	                         |	%1.sys.objects
 	                         |WHERE
-	                         |	name = '%2';
+	                         |	type = 'U'
+	                         |	AND name = '%2';
 	                         |
 	                         |SET NOCOUNT OFF"" ",
 	                         База,
@@ -1200,20 +1206,21 @@
 Функция ТаблицыБазы(База, ТолькоКоличество = Ложь, ФильтрТаблицПоИмени = "") Экспорт
 
 	ШаблонЗапроса = """SET NOCOUNT ON;
-	                | SELECT
-	                | %2
-	                | FROM [%1].sys.tables T
-	                | %3
-	                | SET NOCOUNT OFF;"" ";
+	                |SELECT
+	                |%2
+	                |FROM [%1].sys.objects T
+	                |WHERE
+	                |%3
+	                |SET NOCOUNT OFF;"" ";
 
 	Поля = "T.Name AS [Table]";
 	Если ТолькоКоличество Тогда
 		Поля = "COUNT(T.Name) AS TableCount";
 	КонецЕсли;
 
-	Условие = "";
+	Условие = "T.type = 'U'";
 	Если ЗначениеЗаполнено(ФильтрТаблицПоИмени) Тогда
-		Условие = СтрШаблон("WHERE T.Name LIKE '%1'", ФильтрТаблицПоИмени);
+		Условие = СтрШаблон("%1 AND T.Name LIKE '%2'", Условие, ФильтрТаблицПоИмени);
 	КонецЕсли;
 
 	ТекстЗапроса = СтрШаблон(ШаблонЗапроса, База, Поля, Условие);
@@ -1295,7 +1302,7 @@
 	                | %5 AS Lookups,
 	                | %6 AS Writes
 	                | FROM
-	                | [%1].sys.tables AS Tables
+	                | [%1].sys.objects AS Tables
 	                | INNER JOIN [%1].sys.indexes AS Indexes
 	                | ON Tables.object_id = Indexes.object_id
 	                | INNER JOIN [%1].sys.partitions AS Partitions
@@ -1305,7 +1312,8 @@
 	                | ON Partitions.partition_id = AllocationUnits.container_id
 	                | %7
 	                | WHERE
-	                | Tables.is_ms_shipped = 0
+	                | Tables.type = 'U'
+	                | AND Tables.is_ms_shipped = 0
 	                | AND Indexes.object_id > 255
 	                |%8
 	                | GROUP BY
@@ -1430,23 +1438,20 @@
 	                | SELECT
 	                | T.Name AS [Table],
 	                | C.name AS [Field]
-	                | FROM [%1].sys.tables T
+	                | FROM [%1].sys.objects T
 	                | LEFT JOIN [%1].sys.columns C
 	                | ON T.object_id = C.object_id
+	                |WHERE
 	                | %2
 	                | SET NOCOUNT OFF;"" ";
 
-	Условие = "";
+	Условие = "T.type = 'U'";
 	Если ЗначениеЗаполнено(ФильтрТаблицПоИмени) Тогда
-		Условие = СтрШаблон("WHERE T.Name LIKE '%1'", ФильтрТаблицПоИмени);
+		Условие = СтрШаблон("%1 AND T.Name LIKE '%2'", Условие, ФильтрТаблицПоИмени);
 	КонецЕсли;
 
 	Если ЗначениеЗаполнено(ФильтрКолонокПоИмени) Тогда
-		Если ЗначениеЗаполнено(Условие) Тогда
-			Условие = СтрШаблон("%1 AND C.Name LIKE '%2'", Условие, ФильтрКолонокПоИмени);
-		Иначе
-			Условие = СтрШаблон("WHERE C.Name LIKE '%1'", ФильтрКолонокПоИмени);
-		КонецЕсли;
+		Условие = СтрШаблон("%1 AND C.Name LIKE '%2'", Условие, ФильтрКолонокПоИмени);
 	КонецЕсли;
 
 	ТекстЗапроса = СтрШаблон(ШаблонЗапроса, База, Условие);
