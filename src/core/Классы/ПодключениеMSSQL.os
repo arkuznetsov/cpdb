@@ -1130,10 +1130,12 @@
 //     *РазмерБазы         - Число    - размер текущей базы данных в байтах, включает файлы данных и журналов
 //     *Свободно           - Число    - место в базе данных, не зарезервированное для объектов базы данных
 //     *Зарезервировано    - Число    - общий объем, выделенный объектам в базе данных
-//     *Данные             - Число    - общий объем, используемый данными
-//     *Индексы            - Число    - общий объем, используемый индексами
-//     *НеИспользуется     - Число    - общий объем, зарезервированный для объектов в базе данных,
+//     *Данные             - Число    - зарезервированный объем, используемый данными
+//     *Индексы            - Число    - зарезервированный объем, используемый индексами
+//     *НеИспользуется     - Число    - объем, зарезервированный для объектов в базе данных,
 //                                      но пока не используемый
+//     *ЖурналВсего        - Число    - полный объем журнала транзакций
+//     *ЖурналИспользуется - Число    - используемый объем журнала транзакций
 //
 Функция ЗанимаемоеБазойМесто(База) Экспорт
 
@@ -1141,7 +1143,31 @@
 	                         |
 	                         |SET NOCOUNT ON;
 	                         |
-	                         |exec sp_spaceused @oneresultset=1;
+	                         |declare @space_usage_data table(
+	                         |database_name nvarchar(128),
+	                         |database_size varchar(18),
+	                         |unallocated_space varchar(18),
+	                         |reserved varchar(18),
+	                         |data varchar(18),
+	                         |index_size varchar(18),
+	                         |unused varchar(18))
+	                         |INSERT INTO @space_usage_data exec sp_spaceused @oneresultset=1
+	                         |
+	                         |SELECT
+	                         |space_usage_data.database_name,
+	                         |CONVERT(dec(15,2), LTRIM(LEFT(space_usage_data.database_size, CHARINDEX('MB', space_usage_data.database_size) - 1))) * 1048576 AS database_size,
+	                         |CONVERT(dec(15,2), LTRIM(LEFT(space_usage_data.unallocated_space, CHARINDEX('MB', space_usage_data.unallocated_space) - 1))) * 1048576 AS unallocated_space,
+	                         |CONVERT(dec(15,2), LTRIM(LEFT(space_usage_data.reserved, CHARINDEX('KB', space_usage_data.reserved) - 1))) * 1024 AS reserved,
+	                         |CONVERT(dec(15,2), LTRIM(LEFT(space_usage_data.data, CHARINDEX('KB', space_usage_data.data) - 1))) * 1024 AS data_size,
+	                         |CONVERT(dec(15,2), LTRIM(LEFT(space_usage_data.index_size, CHARINDEX('KB', space_usage_data.index_size) - 1))) * 1024 AS index_size,
+	                         |CONVERT(dec(15,2), LTRIM(LEFT(space_usage_data.unused, CHARINDEX('KB', space_usage_data.unused) - 1))) * 1024 AS unused,
+	                         |CONVERT(dec(15,2), space_usage_log.total_log_size_in_bytes) AS log_size_total,
+	                         |CONVERT(dec(15,2), space_usage_log.used_log_space_in_bytes) AS log_size_used
+	                         |FROM @space_usage_data AS space_usage_data
+	                         |LEFT JOIN sys.databases AS dbs
+	                         |on space_usage_data.database_name = dbs.name
+	                         |LEFT JOIN sys.dm_db_log_space_usage AS space_usage_log
+	                         |on dbs.database_id = space_usage_log.database_id
 	                         |
 	                         |SET NOCOUNT OFF"" ",
 	                         База);
@@ -1165,12 +1191,14 @@
 	КонецЕсли;
 
 	Результат = Новый Структура();
-	Результат.Вставить("РазмерБазы"     , 1);
-	Результат.Вставить("Свободно"       , 2);
-	Результат.Вставить("Зарезервировано", 3);
-	Результат.Вставить("Данные"         , 4);
-	Результат.Вставить("Индексы"        , 5);
-	Результат.Вставить("НеИспользуется" , 6);
+	Результат.Вставить("РазмерБазы"         , 1);
+	Результат.Вставить("Свободно"           , 2);
+	Результат.Вставить("Зарезервировано"    , 3);
+	Результат.Вставить("Данные"             , 4);
+	Результат.Вставить("Индексы"            , 5);
+	Результат.Вставить("НеИспользуется"     , 6);
+	Результат.Вставить("ЖурналВсего"        , 7);
+	Результат.Вставить("ЖурналИспользуется" , 8);
 
 	Текст = Новый ТекстовыйДокумент();
 	Текст.УстановитьТекст(РезультатЗапроса);
@@ -1938,7 +1966,7 @@
 //   Булево    - Истина - команда выполнена успешно
 //
 Функция ВыполнитьСкриптыЗапросСУБД(МассивСкриптов, МассивПеременных = Неопределено, РезультатЗапроса = "") Экспорт
-	
+
 	КодировкаВывода = КодировкаТекста.UTF8;
 
 	НастройкаКодировки = ПолучитьПеременнуюСреды("SQLCMD_ENCODING");

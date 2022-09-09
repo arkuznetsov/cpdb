@@ -538,12 +538,12 @@ cpdb yadisk --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX get --path "d:\MSSQL\Backup\" 
 
 ```bat
 // Помещает файл "MyDatabase_copy.bak" в сервис NextCloud
-cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" put --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" put --file "d:\MSSQL\Backup\MyDatabase_copy.bak" --path "/transfer" --delsrc
 ```
 
 ```bat
 // Помещает файлы, указанные в списке "MyDatabase_copy.split" в сервис NextCloud
-cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" put --list "d:\MSSQL\Backup\MyDatabase_copy.split" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --path "/transfer" --delsrc
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" put --list "d:\MSSQL\Backup\MyDatabase_copy.split" --path "/transfer" --delsrc
 ```
 
 ## get - Получение файла из сервиса NextCloud
@@ -562,12 +562,12 @@ cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" pu
 
 ```bat
 // Получает файл "MyDatabase_copy.bak" из сервиса NextCloud
-cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --file "/transfer/MyDatabase_copy.bak" --delsrc
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\MyDatabase_copy.bak" --file "/transfer/MyDatabase_copy.bak" --delsrc
 ```
 
 ```bat
 // Получает файлы, указанные в списке "MyDatabase_copy.split" из сервиса NextCloud
-cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\" --token XXXXXXXXXXXXXXXXXXXXXXXXXXXXX --list "/transfer/MyDatabase_copy.split" -delsrc
+cpdb nextcloud --service "http://MyNextCloud" --user "admin" --pwd "P@$$w0rd" get --path "d:\MSSQL\Backup\" --list "/transfer/MyDatabase_copy.split" -delsrc
 ```
 
 ## <a id="sftp"></a> sftp - Группа команд работы с SFTP-сервером
@@ -1307,13 +1307,15 @@ cpdb batch "./rest_TST_DB_MyDomain.json"
 
 *Возвращаемое значение:* Структура - описание занимаего места
 
-     * РазмерБазы        - Число    - размер текущей базы данных в байтах, включает файлы данных и журналов
-     * Свободно          - Число    - место в базе данных, не зарезервированное для объектов базы данных
-     * Зарезервировано   - Число    - общий объем, выделенный объектам в базе данных
-     * Данные            - Число    - общий объем, используемый данными
-     * Индексы           - Число    - общий объем, используемый индексами
-     * НеИспользуется    - Число    - общий объем, зарезервированный для объектов в базе данных,
-                                      но пока не используемый
+     * РазмерБазы         - Число    - размер текущей базы данных в байтах, включает файлы данных и журналов
+     * Свободно           - Число    - место в базе данных, не зарезервированное для объектов базы данных
+     * Зарезервировано    - Число    - общий объем, выделенный объектам в базе данных
+     * Данные             - Число    - зарезервированный объем, используемый данными
+     * Индексы            - Число    - зарезервированный объем, используемый индексами
+     * НеИспользуется     - Число    - объем, зарезервированный для объектов в базе данных,
+                                       но пока не используемый
+     * ЖурналВсего        - Число    - полный объем журнала транзакций
+     * ЖурналИспользуется - Число    - используемый объем журнала транзакций
 
 #### **Функция ПоказателиИспользованияТаблицБазы()** - возвращает список таблиц в базе MS SQL Server и их показатели использования
 
