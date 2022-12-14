@@ -1,5 +1,3 @@
-# 1C Database copier (cpdb)
-
 [![GitHub release](https://img.shields.io/github/release/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
 [![GitHub license](https://img.shields.io/github/license/ArKuznetsov/cpdb.svg?style=flat-square)](https://github.com/ArKuznetsov/cpdb/blob/develop/LICENSE)
 [![GitHub Releases](https://img.shields.io/github/downloads/ArKuznetsov/cpdb/latest/total?style=flat-square)](https://github.com/ArKuznetsov/cpdb/releases)
@@ -10,6 +8,9 @@
 [![Coverage](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=coverage)](https://open.checkbsl.org/dashboard/index/cpdb)
 [![Tech debt](https://open.checkbsl.org/api/project_badges/measure?project=cpdb&metric=sqale_index)](https://open.checkbsl.org/dashboard/index/cpdb)
 
+[![Checked by Silver Bulleters SonarQube BSL plugin](https://web-files.do.bit-erp.ru/sonar/b_t.png)](https://checkbsl.org)
+
+# 1C Database copier (cpdb)
 
 Библиотека и приложение для получения информации о базах 1С, копирования баз 1C и развертывания на целевой системе.
 
