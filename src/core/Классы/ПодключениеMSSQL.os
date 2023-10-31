@@ -650,7 +650,7 @@
 
 	ТекстЗапроса = СтрШаблон("""USE [master];
 	                         |
-	                         |ALTER DATABASE %1
+	                         |ALTER DATABASE [%1]
 	                         |SET RECOVERY %2"" ",
 	                         База,
 	                         МодельВосстановления);
