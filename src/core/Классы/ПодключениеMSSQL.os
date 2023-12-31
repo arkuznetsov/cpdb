@@ -349,10 +349,10 @@
 	                         |CREATE DATABASE [%1]
 	                         |ON
 	                         |( NAME = %1,
-	                         |  FILENAME = '%2\%1.mdf')
+	                         |  FILENAME = '%2%1.mdf')
 	                         |LOG ON
 	                         |( NAME = %1_log,
-	                         |  FILENAME = '%2\%1_log.ldf');
+	                         |  FILENAME = '%2%1_log.ldf');
 	                         |
 	                         |ALTER DATABASE [%1]
 	                         |SET RECOVERY %3"" ",
@@ -650,7 +650,7 @@
 
 	ТекстЗапроса = СтрШаблон("""USE [master];
 	                         |
-	                         |ALTER DATABASE %1
+	                         |ALTER DATABASE [%1]
 	                         |SET RECOVERY %2"" ",
 	                         База,
 	                         МодельВосстановления);
@@ -885,8 +885,8 @@
 	                         |ALTER DATABASE [%1] SET SINGLE_USER WITH ROLLBACK IMMEDIATE;
 	                         |
 	                         |RESTORE DATABASE [%1] FROM  DISK = N'%2' WITH  FILE = 1,
-	                         |MOVE N'%3' TO N'%4\%1.mdf',
-	                         |MOVE N'%5' TO N'%6\%1_log.ldf',
+	                         |MOVE N'%3' TO N'%4%1.mdf',
+	                         |MOVE N'%5' TO N'%6%1_log.ldf',
 	                         |NOUNLOAD,  REPLACE,  STATS = 10;
 	                         |
 	                         |ALTER DATABASE [%1] SET MULTI_USER"" ",
