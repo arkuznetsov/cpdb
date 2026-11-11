@@ -3,3 +3,5 @@ sonarlint.json
 \.sonar/
 build/
 *.ospx
+oscript_modules/
+src/cmd/oscript.cfg
