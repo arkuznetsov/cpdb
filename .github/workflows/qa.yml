@@ -15,19 +15,19 @@ jobs:
       fail-fast: false
       matrix:
         os: [cpdb]
-        oscript_version: ['1.8.3']
+        oscript_version: ['1.9.4']
 
     steps:
       # Загрузка проекта
       - name: Актуализация
-        uses: actions/checkout@v3
+        uses: actions/checkout@v7.0.1
         with:
           fetch-depth: 0  # Shallow clones should be disabled for a better relevancy of analysis
           lfs: true
 
       # Установка OneScript конкретной версии
       - name: Установка OneScript
-        uses: otymko/setup-onescript@v1.0
+        uses: otymko/setup-onescript@v1.5.1
         with:
           version: ${{ matrix.oscript_version }}
 
@@ -83,7 +83,7 @@ jobs:
         id: extract_version
 
       - name: Установка Sonar-scanner
-        uses: warchant/setup-sonar-scanner@v1
+        uses: warchant/setup-sonar-scanner@v10
 
       # Анализ проекта в SonarQube (ветка)
       - name: Анализ в SonarQube (branch)
